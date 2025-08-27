@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "experimentalDecorators": true,
+    "paths": {
+      "@app/*": ["./src/app/*"],
+      "@domain/*": ["./src/domain/*"],
+      "@infra/*": ["./src/infra/*"],
+      "@main/*": ["./src/main/*"],
+
+      "@components/*": ["./src/presentation/components/*"],
+      "@config/*": ["./src/presentation/config/*"],
+      "@helpers/*": ["./src/presentation/helpers/*"],
+      "@pages/*": ["./src/presentation/pages/*"],
+      "@stores/*": ["./src/presentation/stores/*"],
+      "@stories/*": ["./src/presentation/stories/*"],
+      "@styles/*": ["./src/presentation/styles/*"],
+      "@ui/*": ["./src/presentation/ui/*"],
+      "@assets/*": ["./.docs/assets/*"],
+      "@icons/*": ["./.docs/assets/icons/*"],
+
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}

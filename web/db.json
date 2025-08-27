@@ -1,0 +1,48 @@
+{
+    "centrals": [
+        {
+            "id": 1,
+            "name": "Central 1",
+            "mac": "10:E0:09:00:50:00",
+            "modelId": 1
+        },
+        {
+            "id": 2,
+            "name": "Central 2",
+            "mac": "03:00:G0:80:80:02",
+            "modelId": 2
+        },
+        {
+            "id": 3,
+            "name": "Central 3",
+            "mac": "56:0U:00:60:40:00",
+            "modelId": 4
+        }
+    ],
+    "models": [
+        {
+            "id": 1,
+            "name": "AMT 4010"
+        },
+        {
+            "id": 2,
+            "name": "AMT 4010 SMART"
+        },
+        {
+            "id": 3,
+            "name": "AMT 2018"
+        },
+        {
+            "id": 4,
+            "name": "AMT 2018 E/EG"
+        },
+        {
+            "id": 5,
+            "name": "AMT 1000"
+        },
+        {
+            "id": 6,
+            "name": "AMT 8000"
+        }
+    ]
+}
