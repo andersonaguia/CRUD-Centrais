@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Model {
+  id     Int     @id @default(autoincrement())
+  name   String  @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  centrals Central[]
+}
+
+model Central {
+  id      Int     @id @default(autoincrement())
+  name    String
+  mac     String  @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  model   Model   @relation(fields: [modelId], references: [id])
+  modelId Int
+}

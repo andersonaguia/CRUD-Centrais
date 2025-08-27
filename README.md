@@ -8,6 +8,7 @@ Projeto desenvolvido para gerenciamento dos cadastros de centrais e modelos de c
 
 ## Configuração do projeto
 
+- [Banco de Dados](/database/README.md)
 - [Backend](/backend/README.md)
 - [Web](/web/README.md)
 
