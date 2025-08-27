@@ -34,6 +34,12 @@ $ npx prisma migrate deploy
 $ npx prisma generate
 ```
 
+5 - Popular a tabela de modelos de central
+
+```bash
+$ npx prisma db seed
+```
+
 ## Compilando e rodando a aplicação
 
 ```bash
