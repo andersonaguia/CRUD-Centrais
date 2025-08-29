@@ -6,6 +6,8 @@ import { ModelService } from 'src/modules/model/services/model.service';
 import { Messages } from 'src/common/messages';
 import { CentralDataDto } from '../dto/central-data.dto';
 import { ModelDto } from 'src/modules/model/dto/model.dto';
+import { PaginationDto } from '../dto/pagination.dto';
+import { CentralFilterDto } from '../dto/central-filter.dto';
 
 @Injectable()
 export class CentralService {
@@ -53,5 +55,43 @@ export class CentralService {
 
   async deleteById(id: number): Promise<void> {
     const deleted = await this.centralRepository.deleteById(id);
+  }
+
+  async findAll(
+    pagination: PaginationDto,
+    filters: CentralFilterDto,
+  ): Promise<{ data: CentralDataDto[]; total: number }> {
+    const { page = 1, orderBy = 'id', sortOrder = 'asc' } = pagination;
+
+    let { limit = 10 } = pagination;
+
+    limit = limit > 100 ? 100 : limit;
+
+    const skip = (page - 1) * limit;
+
+    const centrals = await this.centralRepository.findAll(
+      skip,
+      limit,
+      orderBy,
+      sortOrder,
+      filters,
+    );
+    const total = await this.centralRepository.countAll(filters);
+
+    const mappedCentrals = centrals.map((central) => {
+      const centralData = new CentralDataDto();
+      centralData.id = central.id;
+      centralData.name = central.name;
+      centralData.mac = central.mac;
+
+      const modelData = new ModelDto();
+      modelData.id = central.model.id;
+      modelData.name = central.model.name;
+      centralData.model = modelData;
+
+      return centralData;
+    });
+
+    return { data: mappedCentrals, total };
   }
 }

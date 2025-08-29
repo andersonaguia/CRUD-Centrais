@@ -3,6 +3,8 @@ import { Central, Prisma } from '@prisma/client';
 import { PrismaService } from 'src/modules/database/services/prisma.service';
 import { CreateCentralDto } from '../dto/create-central.dto';
 import { Messages } from 'src/common/messages';
+import { CentralFilterDto } from '../dto/central-filter.dto';
+import { CentralWithModel } from '../types/central.type';
 
 @Injectable()
 export class CentralRepository {
@@ -56,5 +58,67 @@ export class CentralRepository {
     }
 
     return;
+  }
+
+  async findAll(
+    skip: number,
+    take: number,
+    orderBy: string,
+    sortOrder: string,
+    filters: CentralFilterDto,
+  ): Promise<CentralWithModel[]> {
+    const where: Prisma.CentralWhereInput = {
+      deletedAt: null, 
+    };
+
+    if (filters.name) {
+      where.name = { contains: filters.name }; 
+    }
+    if (filters.mac) {
+      where.mac = { contains: filters.mac }; 
+    }
+    if (filters.modelId) {
+      where.modelId = filters.modelId; 
+    }
+
+    const orderByClause: Prisma.CentralOrderByWithRelationInput = {};
+    if (orderBy) {
+      orderByClause[orderBy] = sortOrder;
+    } else {
+      orderByClause.id = 'asc'; 
+    }
+
+    return await this.prisma.central.findMany({
+      skip,
+      take,
+      where,
+      orderBy: orderByClause,
+      include: {
+        model: {
+          select: {
+            id: true, 
+            name: true,
+          },
+        },
+      },
+    });
+  }
+
+  async countAll(filters: CentralFilterDto): Promise<number> {
+    const where: Prisma.CentralWhereInput = {
+      deletedAt: null,
+    };
+
+    if (filters.name) {
+      where.name = { contains: filters.name};
+    }
+    if (filters.mac) {
+      where.mac = { contains: filters.mac };
+    }
+    if (filters.modelId) {
+      where.modelId = filters.modelId;
+    }
+
+    return await this.prisma.central.count({ where });
   }
 }

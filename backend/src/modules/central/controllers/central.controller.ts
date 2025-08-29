@@ -8,12 +8,21 @@ import {
   HttpStatus,
   Param,
   Post,
+  Query,
 } from '@nestjs/common';
-import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Messages } from 'src/common/messages';
 import { CentralService } from '../services/central.service';
 import { CreateCentralDto } from '../dto/create-central.dto';
 import { CentralDataDto } from '../dto/central-data.dto';
+import { PaginationDto } from '../dto/pagination.dto';
+import { CentralFilterDto } from '../dto/central-filter.dto';
 
 @ApiTags(Messages.Central.docs.API_TAG)
 @Controller('/centrals')
@@ -118,6 +127,73 @@ export class CentralController {
       if (error.code && error.message) {
         throw new HttpException(error.message, error.code);
       }
+      throw new HttpException(
+        Messages.Central.http.INTERNAL_SERVER_ERROR,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  @Get()
+  @ApiOperation({ summary: Messages.Central.docs.FIND_ALL_SUMMARY })
+  @ApiQuery({
+    name: 'page',
+    required: false,
+    type: Number,
+    description: Messages.default.pagination.PAGE_NUMBER,
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    type: Number,
+    description: Messages.default.pagination.LIMIT_PER_PAGE,
+  })
+  @ApiQuery({
+    name: 'name',
+    required: false,
+    type: String,
+    description: Messages.default.pagination.FILTER_BY_NAME,
+  })
+  @ApiQuery({
+    name: 'mac',
+    required: false,
+    type: String,
+    description: Messages.Central.docs.FILTER_BY_MAC,
+  })
+  @ApiQuery({
+    name: 'modelId',
+    required: false,
+    type: Number,
+    description: Messages.Central.docs.FILTER_BY_MODEL_ID,
+  })
+  @ApiQuery({
+    name: 'orderBy',
+    required: false,
+    type: String,
+    description: Messages.default.pagination.ORDER_FIELDS,
+  })
+  @ApiQuery({
+    name: 'sortOrder',
+    required: false,
+    enum: ['asc', 'desc'],
+    description: Messages.default.pagination.ORDER,
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: [CentralDataDto],
+    description: Messages.Central.http.OK,
+  })
+  @ApiResponse({
+    status: HttpStatus.INTERNAL_SERVER_ERROR,
+    description: Messages.Model.http.INTERNAL_SERVER_ERROR,
+  })
+  async findAll(
+    @Query() paginationDto: PaginationDto,
+    @Query() filterDto: CentralFilterDto,
+  ): Promise<{ total: number; data: CentralDataDto[] }> {
+    try {
+      return await this.centralService.findAll(paginationDto, filterDto);
+    } catch (error) {
       throw new HttpException(
         Messages.Central.http.INTERNAL_SERVER_ERROR,
         HttpStatus.INTERNAL_SERVER_ERROR,
