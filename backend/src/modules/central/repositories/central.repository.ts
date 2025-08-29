@@ -29,4 +29,11 @@ export class CentralRepository {
       throw error;
     }
   }
+
+  async findOneById(id: number) {
+    return await this.prisma.central.findUnique({
+      where: { id },
+      include: { model: { select: { name: true } } },
+    });
+  }
 }

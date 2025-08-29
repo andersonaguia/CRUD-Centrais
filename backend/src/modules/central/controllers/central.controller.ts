@@ -1,15 +1,17 @@
 import {
   Body,
   Controller,
+  Get,
   HttpException,
   HttpStatus,
+  Param,
   Post,
 } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Messages } from 'src/common/messages';
 import { CentralService } from '../services/central.service';
 import { CreateCentralDto } from '../dto/create-central.dto';
-import { Central } from '@prisma/client';
+import { CentralDataDto } from '../dto/central-data.dto';
 
 @ApiTags(Messages.Central.docs.API_TAG)
 @Controller('/centrals')
@@ -47,6 +49,37 @@ export class CentralController {
   ): Promise<CreateCentralDto> {
     try {
       return await this.centralService.create(createCentralDto);
+    } catch (error) {
+      if (error.code && error.message) {
+        throw new HttpException(error.message, error.code);
+      }
+      throw new HttpException(
+        Messages.Central.http.INTERNAL_SERVER_ERROR,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  @Get(':id')
+  @ApiOperation({ summary: Messages.Central.docs.FIND_ONE_SUMMARY })
+  @ApiParam({ name: 'id', example: 1 })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: CentralDataDto,
+    description: Messages.Central.http.OK,
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: Messages.Central.http.NOT_FOUND,
+    example: `${Messages.Central.http.ID_NOT_FOUND_ERROR} 1`,
+  })
+  @ApiResponse({
+    status: HttpStatus.INTERNAL_SERVER_ERROR,
+    description: Messages.Model.http.INTERNAL_SERVER_ERROR,
+  })
+  async findOne(@Param('id') id: number): Promise<CentralDataDto> {
+    try {
+      return await this.centralService.findOneById(+id);
     } catch (error) {
       if (error.code && error.message) {
         throw new HttpException(error.message, error.code);

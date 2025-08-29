@@ -3,7 +3,7 @@ export const Messages = {
     http: {
       INTERNAL_SERVER_ERROR: 'Internal Server Error',
       ID_NOT_FOUND_ERROR: 'Nenhum modelo de central encontrado para o id',
-      NOT_FOUND: 'Not Found'
+      NOT_FOUND: 'Not Found',
     },
     docs: {
       API_TAG: 'Models',
@@ -17,11 +17,15 @@ export const Messages = {
       CREATED_SUCCESS: 'Created',
       MAC_NOT_UNIQUE: 'Já existe uma central cadastrada com o endereço MAC:',
       BAD_REQUEST: 'Bad Request',
-      CONFLICT: 'Conflict'
+      CONFLICT: 'Conflict',
+      ID_NOT_FOUND_ERROR: 'Nenhuma central encontrada para o id',
+      NOT_FOUND: 'Not Found',
+      OK: 'ok',
     },
     docs: {
       API_TAG: 'Centrals',
       CREATE_SUMMARY: 'Cadastrar uma nova central',
+      FIND_ONE_SUMMARY: 'Obter os dados de uma central por ID',
       NAME: {
         example: 'Central 1',
         description: 'Nome da Central',
