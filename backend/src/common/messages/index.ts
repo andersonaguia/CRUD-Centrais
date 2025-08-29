@@ -66,6 +66,7 @@ export const Messages = {
       MAC: {
         type: 'Campo MAC deve ser do tipo string',
         required: 'Obrigatório preencher o campo MAC',
+        format: 'Formato do MAC enviado é inválido',
       },
       MODEL_ID: {
         type: 'Campo modelId deve ser do tipo number',

@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsNotEmpty, IsString } from 'class-validator';
+import { IsInt, IsMACAddress, IsNotEmpty, IsString } from 'class-validator';
 import { Messages } from 'src/common/messages';
 
 export class CreateCentralDto {
@@ -17,6 +17,7 @@ export class CreateCentralDto {
   })
   @IsString({ message: Messages.Central.validators.MAC.type })
   @IsNotEmpty({ message: Messages.Central.validators.MAC.required })
+  @IsMACAddress({message: Messages.Central.validators.MAC.format})
   mac: string;
 
   @ApiProperty({
