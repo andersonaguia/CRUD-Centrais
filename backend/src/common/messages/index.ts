@@ -1,4 +1,13 @@
 export const Messages = {
+  default: {
+    pagination: {
+      PAGE_NUMBER: 'Número da página',
+      LIMIT_PER_PAGE: 'Limite de itens por página',
+      FILTER_BY_NAME: 'Filtrar por nome',
+      ORDER: 'Ordem da ordenação (asc ou desc)',
+      ORDER_FIELDS: 'Campo para ordenação (ex: name, mac)',
+    },
+  },
   Model: {
     http: {
       INTERNAL_SERVER_ERROR: 'Internal Server Error',
@@ -14,8 +23,10 @@ export const Messages = {
   Central: {
     http: {
       INTERNAL_SERVER_ERROR: 'Internal Server Error',
-      CREATE_INTERNAL_SERVER_ERROR: 'Erro interno ao tentar cadastrar a central',
-      DELETE_INTERNAL_SERVER_ERROR: 'Erro interno ao tentar excluir os dados da central',
+      CREATE_INTERNAL_SERVER_ERROR:
+        'Erro interno ao tentar cadastrar a central',
+      DELETE_INTERNAL_SERVER_ERROR:
+        'Erro interno ao tentar excluir os dados da central',
       CREATED_SUCCESS: 'Created',
       MAC_NOT_UNIQUE: 'Já existe uma central cadastrada com o endereço MAC:',
       BAD_REQUEST: 'Bad Request',
@@ -30,6 +41,10 @@ export const Messages = {
       CREATE_SUMMARY: 'Cadastrar uma nova central',
       FIND_ONE_SUMMARY: 'Obter os dados de uma central por ID',
       DELETE_SUMMARY: 'Deletar os dados de uma central por ID',
+      FIND_ALL_SUMMARY: 'Obter dados de todas as centrais paginado',
+      UPDATE_SUMMARY: 'Atualizar os dados de uma central',
+      FILTER_BY_MAC: 'Filtrar por endereço MAC',
+      FILTER_BY_MODEL_ID: 'Filtrar por ID do modelo',
       NAME: {
         example: 'Central 1',
         description: 'Nome da Central',
@@ -52,6 +67,7 @@ export const Messages = {
       MAC: {
         type: 'Campo MAC deve ser do tipo string',
         required: 'Obrigatório preencher o campo MAC',
+        format: 'Formato do MAC enviado é inválido',
       },
       MODEL_ID: {
         type: 'Campo modelId deve ser do tipo number',

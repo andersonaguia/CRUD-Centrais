@@ -64,4 +64,117 @@ $ npm run test:cov
 ```
 
 ## Rotas da aplicação
+### As rotas da aplicação estão documentadas via [Swagger](https://swagger.io/) e você pode utilizá-las acessando [localhost:3000/api](http://localhost:3000/api)
+
+- `GET /centrals` → listar todas as centrais (com paginação, filtros e ordenação)
+```JSON
+# Retorno esperado
+
+{
+  "data": [
+    {
+      "id": 3,
+      "name": "Central 25",
+      "mac": "55:55:55:55:55:55",
+      "model": {
+        "id": 1,
+        "name": "AMT 4010"
+      }
+    },
+    {
+      "id": 10,
+      "name": "Central 2",
+      "mac": "10:E0:09:00:50:08",
+      "model": {
+        "id": 1,
+        "name": "AMT 4010"
+      }
+    }
+  ],
+  "total": 17
+}
+```
+
+- `GET /centrals/:id` → obter uma central específica
+```JSON
+# Retorno esperado
+
+{
+  "id": 10,
+  "name": "Central 2",
+  "mac": "10:E0:09:00:50:08",
+  "model": {
+    "id": 1,
+    "name": "AMT 4010"
+  }
+}  
+```
+
+- `POST /centrals` → criar uma nova central
+```JSON
+# Retorno esperado
+
+{
+  "id": 10,
+  "name": "Central Nova",
+  "mac": "10:E0:09:00:50:08",
+  "model": {
+    "id": 1,
+    "name": "AMT 4010"
+  }
+}  
+```
+
+- `PUT /centrals/:id` → atualizar uma central existente
+```JSON
+# Retorno esperado
+
+{
+  "id": 10,
+  "name": "Central Atualizada",
+  "mac": "10:E0:09:00:50:08",
+  "model": {
+    "id": 1,
+    "name": "AMT 4010"
+  }
+}  
+```
+
+- `DELETE /centrals/:id` → remover uma central (soft delete)
+  
+```
+Status: 204 No Content
+```
+
+- `GET /models` → listar modelos de centrais
+```JSON
+# Retorno esperado
+
+[
+  {
+    "id": 1,
+    "name": "AMT 4010"
+  },
+  {
+    "id": 2,
+    "name": "AMT 4010 SMART"
+  },
+  {
+    "id": 3,
+    "name": "AMT 2018"
+  },
+  {
+    "id": 4,
+    "name": "AMT 2018 E/EG"
+  },
+  {
+    "id": 5,
+    "name": "AMT 1000"
+  },
+  {
+    "id": 6,
+    "name": "AMT 8000"
+  }
+]  
+```
 
