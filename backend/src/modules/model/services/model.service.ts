@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ModelDto } from '../dto/model.dto';
 import { ModelRepository } from '../repositories/model.repository';
+import { Model } from '@prisma/client';
 
 @Injectable()
 export class ModelService {
@@ -21,5 +22,9 @@ export class ModelService {
         reject(error);
       }
     });
+  }
+
+  async findOneById(id: number): Promise<Model | null> {
+    return await this.modelRepository.findOneById(id);
   }
 }

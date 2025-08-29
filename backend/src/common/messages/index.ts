@@ -1,7 +1,9 @@
 export const Messages = {
   Model: {
     http: {
-      INTERNAL_SERVER_ERROR: 'Erro interno ao buscar os modelos de central',
+      INTERNAL_SERVER_ERROR: 'Internal Server Error',
+      ID_NOT_FOUND_ERROR: 'Nenhum modelo de central encontrado para o id',
+      NOT_FOUND: 'Not Found'
     },
     docs: {
       API_TAG: 'Models',
@@ -12,7 +14,10 @@ export const Messages = {
   Central: {
     http: {
       INTERNAL_SERVER_ERROR: 'Erro interno ao tentar cadastrar a central',
-      CREATED_SUCCESS: 'Central cadastrada com sucesso!',
+      CREATED_SUCCESS: 'Created',
+      MAC_NOT_UNIQUE: 'Já existe uma central cadastrada com o endereço MAC:',
+      BAD_REQUEST: 'Bad Request',
+      CONFLICT: 'Conflict'
     },
     docs: {
       API_TAG: 'Centrals',
@@ -30,6 +35,20 @@ export const Messages = {
         description: 'ID do modelo associado à central',
       },
     },
-    validators: {},
+    validators: {
+      NOT_NULL: 'Obrigatório preencher o campo',
+      NAME: {
+        type: 'Campo nome deve ser do tipo string',
+        required: 'Obrigatório preencher o campo name',
+      },
+      MAC: {
+        type: 'Campo MAC deve ser do tipo string',
+        required: 'Obrigatório preencher o campo MAC',
+      },
+      MODEL_ID: {
+        type: 'Campo modelId deve ser do tipo number',
+        required: 'Obrigatório preencher o campo modelId',
+      },
+    },
   },
 };
