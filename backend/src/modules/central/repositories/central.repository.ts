@@ -5,6 +5,7 @@ import { CreateCentralDto } from '../dto/create-central.dto';
 import { Messages } from 'src/common/messages';
 import { CentralFilterDto } from '../dto/central-filter.dto';
 import { CentralWithModel } from '../types/central.type';
+import { UpdateCentralDto } from '../dto/update-central.dto';
 
 @Injectable()
 export class CentralRepository {
@@ -68,24 +69,24 @@ export class CentralRepository {
     filters: CentralFilterDto,
   ): Promise<CentralWithModel[]> {
     const where: Prisma.CentralWhereInput = {
-      deletedAt: null, 
+      deletedAt: null,
     };
 
     if (filters.name) {
-      where.name = { contains: filters.name }; 
+      where.name = { contains: filters.name };
     }
     if (filters.mac) {
-      where.mac = { contains: filters.mac }; 
+      where.mac = { contains: filters.mac };
     }
     if (filters.modelId) {
-      where.modelId = filters.modelId; 
+      where.modelId = filters.modelId;
     }
 
     const orderByClause: Prisma.CentralOrderByWithRelationInput = {};
     if (orderBy) {
       orderByClause[orderBy] = sortOrder;
     } else {
-      orderByClause.id = 'asc'; 
+      orderByClause.id = 'asc';
     }
 
     return await this.prisma.central.findMany({
@@ -96,7 +97,7 @@ export class CentralRepository {
       include: {
         model: {
           select: {
-            id: true, 
+            id: true,
             name: true,
           },
         },
@@ -110,7 +111,7 @@ export class CentralRepository {
     };
 
     if (filters.name) {
-      where.name = { contains: filters.name};
+      where.name = { contains: filters.name };
     }
     if (filters.mac) {
       where.mac = { contains: filters.mac };
@@ -120,5 +121,36 @@ export class CentralRepository {
     }
 
     return await this.prisma.central.count({ where });
+  }
+
+  async update(id: number, data: UpdateCentralDto): Promise<CentralWithModel> {
+    try {
+      return await this.prisma.central.update({
+        where: { id },
+        data: {
+          name: data.name,
+          mac: data.mac,
+          modelId: data.modelId,
+          updatedAt: new Date(),
+        },
+        include: { model: { select: { id: true, name: true } } },
+      });
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === 'P2002') {
+          throw {
+            code: HttpStatus.CONFLICT,
+            message: `${Messages.Central.http.MAC_NOT_UNIQUE} ${data.mac}`,
+          };
+        }
+        if (error.code === 'P2025') {
+          throw {
+            code: HttpStatus.NOT_FOUND,
+            message: `${Messages.Central.http.ID_NOT_FOUND_ERROR} ${id}`,
+          };
+        }
+      }
+      throw error;
+    }
   }
 }

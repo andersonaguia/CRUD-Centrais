@@ -8,6 +8,7 @@ import {
   HttpStatus,
   Param,
   Post,
+  Put,
   Query,
 } from '@nestjs/common';
 import {
@@ -23,6 +24,7 @@ import { CreateCentralDto } from '../dto/create-central.dto';
 import { CentralDataDto } from '../dto/central-data.dto';
 import { PaginationDto } from '../dto/pagination.dto';
 import { CentralFilterDto } from '../dto/central-filter.dto';
+import { UpdateCentralDto } from '../dto/update-central.dto';
 
 @ApiTags(Messages.Central.docs.API_TAG)
 @Controller('/centrals')
@@ -194,6 +196,49 @@ export class CentralController {
     try {
       return await this.centralService.findAll(paginationDto, filterDto);
     } catch (error) {
+      throw new HttpException(
+        Messages.Central.http.INTERNAL_SERVER_ERROR,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  @Put(':id')
+  @ApiOperation({ summary: Messages.Central.docs.UPDATE_SUMMARY })
+  @ApiParam({ name: 'id', example: 1 })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: CentralDataDto,
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: Messages.Central.http.NOT_FOUND,
+    example: `${Messages.Central.http.ID_NOT_FOUND_ERROR} 1`,
+  })
+  @ApiResponse({
+    status: HttpStatus.CONFLICT,
+    description: Messages.Central.http.CONFLICT,
+    example: `${Messages.Central.http.MAC_NOT_UNIQUE} ${Messages.Central.docs.MAC.example}`,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: Messages.Central.http.BAD_REQUEST,
+    example: Messages.Central.validators.MAC.format,
+  })
+  @ApiResponse({
+    status: HttpStatus.INTERNAL_SERVER_ERROR,
+    description: Messages.Central.http.INTERNAL_SERVER_ERROR,
+  })
+  async updateCentral(
+    @Param('id') id: number,
+    @Body() updateCentralDto: UpdateCentralDto,
+  ): Promise<CentralDataDto> {
+    try {
+      return await this.centralService.update(+id, updateCentralDto);
+    } catch (error) {
+      if (error.code && error.message) {
+        throw new HttpException(error.message, error.code);
+      }
       throw new HttpException(
         Messages.Central.http.INTERNAL_SERVER_ERROR,
         HttpStatus.INTERNAL_SERVER_ERROR,
