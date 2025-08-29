@@ -50,4 +50,8 @@ export class CentralService {
 
     return centralData;
   }
+
+  async deleteById(id: number): Promise<void> {
+    const deleted = await this.centralRepository.deleteById(id);
+  }
 }

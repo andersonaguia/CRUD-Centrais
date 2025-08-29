@@ -1,7 +1,9 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  HttpCode,
   HttpException,
   HttpStatus,
   Param,
@@ -80,6 +82,38 @@ export class CentralController {
   async findOne(@Param('id') id: number): Promise<CentralDataDto> {
     try {
       return await this.centralService.findOneById(+id);
+    } catch (error) {
+      if (error.code && error.message) {
+        throw new HttpException(error.message, error.code);
+      }
+      throw new HttpException(
+        Messages.Central.http.INTERNAL_SERVER_ERROR,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: Messages.Central.docs.DELETE_SUMMARY })
+  @ApiParam({ name: 'id', example: 1 })
+  @ApiResponse({
+    status: HttpStatus.NO_CONTENT,
+    description: Messages.Central.http.NO_CONTENT,
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: Messages.Central.http.NOT_FOUND,
+    example: `${Messages.Central.http.ID_NOT_FOUND_ERROR} 1`,
+  })
+  @ApiResponse({
+    status: HttpStatus.INTERNAL_SERVER_ERROR,
+    description: Messages.Central.http.INTERNAL_SERVER_ERROR,
+    example: Messages.Central.http.DELETE_INTERNAL_SERVER_ERROR,
+  })
+  async deleteById(@Param('id') id: number): Promise<void> {
+    try {
+      await this.centralService.deleteById(+id);
     } catch (error) {
       if (error.code && error.message) {
         throw new HttpException(error.message, error.code);

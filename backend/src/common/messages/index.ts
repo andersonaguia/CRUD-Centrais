@@ -13,7 +13,9 @@ export const Messages = {
   },
   Central: {
     http: {
-      INTERNAL_SERVER_ERROR: 'Erro interno ao tentar cadastrar a central',
+      INTERNAL_SERVER_ERROR: 'Internal Server Error',
+      CREATE_INTERNAL_SERVER_ERROR: 'Erro interno ao tentar cadastrar a central',
+      DELETE_INTERNAL_SERVER_ERROR: 'Erro interno ao tentar excluir os dados da central',
       CREATED_SUCCESS: 'Created',
       MAC_NOT_UNIQUE: 'Já existe uma central cadastrada com o endereço MAC:',
       BAD_REQUEST: 'Bad Request',
@@ -21,11 +23,13 @@ export const Messages = {
       ID_NOT_FOUND_ERROR: 'Nenhuma central encontrada para o id',
       NOT_FOUND: 'Not Found',
       OK: 'ok',
+      NO_CONTENT: 'No Content',
     },
     docs: {
       API_TAG: 'Centrals',
       CREATE_SUMMARY: 'Cadastrar uma nova central',
       FIND_ONE_SUMMARY: 'Obter os dados de uma central por ID',
+      DELETE_SUMMARY: 'Deletar os dados de uma central por ID',
       NAME: {
         example: 'Central 1',
         description: 'Nome da Central',

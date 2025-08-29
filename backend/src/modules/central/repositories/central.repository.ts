@@ -31,9 +31,30 @@ export class CentralRepository {
   }
 
   async findOneById(id: number) {
-    return await this.prisma.central.findUnique({
-      where: { id },
+    return await this.prisma.central.findFirst({
+      where: { id, deletedAt: null },
       include: { model: { select: { name: true } } },
     });
+  }
+
+  async deleteById(id: number): Promise<void> {
+    const result = await this.prisma.central.updateMany({
+      where: {
+        id,
+        deletedAt: null,
+      },
+      data: {
+        deletedAt: new Date(),
+      },
+    });
+
+    if (result.count === 0) {
+      throw {
+        code: HttpStatus.NOT_FOUND,
+        message: `${Messages.Central.http.ID_NOT_FOUND_ERROR} ${id}`,
+      };
+    }
+
+    return;
   }
 }
