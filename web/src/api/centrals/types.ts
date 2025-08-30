@@ -15,3 +15,9 @@ export interface GetCentralsParams {
   modelId?: number;
 }
 
+export interface CreateCentralDto {
+  name: string;
+  mac: string;
+  modelId: number; 
+};
+
