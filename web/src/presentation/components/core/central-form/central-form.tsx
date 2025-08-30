@@ -4,7 +4,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as s from "./styles/central-form.css";
 import { useGetModels } from "../../../../api/models/useModels";
-import { useCreateCentral } from "../../../../api/centrals/useCentrals";
+import {
+  useCreateCentral,
+  useGetCentral,
+  useUpdateCentral,
+} from "../../../../api/centrals/useCentrals";
 import {
   centralSchema,
   CreateCentralFormSchema,
@@ -13,38 +17,80 @@ import { Title } from "../title";
 import axios from "axios";
 import { useModal } from "../modal/contexts/modal-context";
 import { Feedback } from "../feedback/feedback";
+import { useEffect } from "react";
 
-export const CentralForm = () => {
+export const CentralForm = ({ centralId }: { centralId?: string }) => {
   const { openModal } = useModal();
   const createCentralMutation = useCreateCentral();
-  const { data: models, isLoading, error } = useGetModels();
+  const updateCentralMutation = useUpdateCentral();
+  const {
+    data: models,
+    isLoading: isLoadingModels,
+    error: modelsError,
+  } = useGetModels();
+  const {
+    data: centralData,
+    isLoading: isLoadingCentral,
+    error: centralError,
+  } = useGetCentral(centralId || "");
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm<CreateCentralFormSchema>({
     resolver: zodResolver(centralSchema),
   });
 
+  useEffect(() => {
+    if (centralData) {
+      setValue("name", centralData.name);
+      setValue("mac", centralData.mac);
+      setValue("modelId", centralData.model.id);
+    }
+  }, [centralData, reset]);
+
   const onSubmit = (data: CreateCentralFormSchema) => {
-    createCentralMutation.mutate(data, {
-      onSuccess: () => {
-        openModal(<Feedback message="Central cadastrada com sucesso!" />);
-        reset();
-      },
+    if (centralId) {
+      updateCentralMutation.mutate(
+        { id: centralId, data },
+        {
+          onSuccess: () => {
+            openModal(<Feedback message="Central atualizada com sucesso!" />);
+          },
+          onError: (error) => {
+            let errorMessage = "Ocorreu um erro ao tentar editar a central!";
+            if (axios.isAxiosError(error) && error.response) {
+              errorMessage = `${error.response.data.message || error.message}`;
+            }
 
-      onError: (error) => {
-        let errorMessage = "Ocorreu um erro ao tentar cadastrar a central!";
-        if (axios.isAxiosError(error) && error.response) {
-          errorMessage = `${error.response.data.message || error.message}`;
+            openModal(<Feedback message={errorMessage} isError={true} />);
+          },
         }
+      );
+    } else {
+      createCentralMutation.mutate(data, {
+        onSuccess: () => {
+          openModal(<Feedback message="Central cadastrada com sucesso!" />);
+          reset();
+        },
 
-        openModal(<Feedback message={errorMessage} isError={true} />);
-      },
-    });
+        onError: (error) => {
+          let errorMessage = "Ocorreu um erro ao tentar cadastrar a central!";
+          if (axios.isAxiosError(error) && error.response) {
+            errorMessage = `${error.response.data.message || error.message}`;
+          }
+
+          openModal(<Feedback message={errorMessage} isError={true} />);
+        },
+      });
+    }
   };
+
+  const isLoading = isLoadingModels || (centralId && isLoadingCentral);
+  const error = modelsError || centralError;
 
   if (isLoading) {
     return <p>Carregando modelos...</p>;
@@ -58,7 +104,7 @@ export const CentralForm = () => {
     <form onSubmit={handleSubmit(onSubmit)} className={s.formWrapper}>
       <div className={s.formTitle}>
         <Title.Root size="medium">
-          <Title.Text>Nova Central</Title.Text>
+          <Title.Text>{centralData ? centralData.name : "Nova Central"}</Title.Text>
         </Title.Root>
       </div>
 
@@ -104,7 +150,7 @@ export const CentralForm = () => {
         className={s.formButton}
         disabled={createCentralMutation.isPending}
       >
-        Cadastrar Central
+        {centralData ? "Atualizar" : "Cadastrar"}
       </button>
     </form>
   );

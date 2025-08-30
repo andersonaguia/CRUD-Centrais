@@ -21,3 +21,8 @@ export interface CreateCentralDto {
   modelId: number; 
 };
 
+export interface UpdateCentralDto {
+  name?: string;
+  mac?: string;
+  modelId?: number;
+};

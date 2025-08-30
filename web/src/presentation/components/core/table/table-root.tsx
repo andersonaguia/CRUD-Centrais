@@ -1,6 +1,9 @@
 import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { TableRootProps } from "./types";
 import * as s from "./styles/table.css";
+import { ChevronLeftIcon } from "@components/icons/chevron-left";
+import { ChevronRightIcon } from "@components/icons/chevron-right";
+import { Button } from "../button/button";
 
 export function TableRoot<TData>({
   columns,
@@ -51,24 +54,22 @@ export function TableRoot<TData>({
             Página {serverPagination.page} de{" "}
             {Math.ceil(serverPagination.total / serverPagination.limit)}
           </span>
-          <div>
-            <button
+          <div className={s.navigation}>
+            <Button
               className={s.button}
               disabled={serverPagination.page === 1}
               onClick={() => serverPagination.onPageChange(serverPagination.page - 1)}
-            >
-              {"<"}
-            </button>
-            <button
+              icon={ChevronLeftIcon}
+            />
+            <Button
               className={s.button}
               disabled={
                 serverPagination.page >=
                 Math.ceil(serverPagination.total / serverPagination.limit)
               }
               onClick={() => serverPagination.onPageChange(serverPagination.page + 1)}
-            >
-              {">"}
-            </button>
+              icon={ChevronRightIcon}
+            />
           </div>
         </div>
       )}

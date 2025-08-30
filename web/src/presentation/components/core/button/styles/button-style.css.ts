@@ -16,7 +16,7 @@ export const button = style({
   transition: 'background-color 0.2s ease-in-out',
   selectors: {
     '&:hover': {
-      background: theme.colors.hoveredSuccess,
+      background: theme.colors.hoveredSuccessNeutral,
     },
     '&:active': {
       background: theme.colors.successNeutral,

@@ -77,16 +77,40 @@ export const actionsContainer = style({
   gap: "8px",
 });
 
-export const actionButton = style({
+export const editButton = style({
   padding: "4px 8px",
   border: "none",
   borderRadius: "4px",
   background: "transparent",
-  color: theme.colors.neutral,
+  color: theme.colors.penWhite,
   cursor: "pointer",
   selectors: {
     "&:hover": {
       color: theme.colors.hoveredNeutral,
     },
   },
+});
+
+export const deleteButton = style({
+  padding: "4px 8px",
+  border: "none",
+  borderRadius: "4px",
+  background: "transparent",
+  color: theme.colors.alert,
+  cursor: "pointer",
+  selectors: {
+    "&:hover": {
+      color: theme.colors.hoveredAlert,
+      opacity: 0.5
+    },
+  },
+});
+
+export const navigation = style({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  marginTop: "12px",
+  fontSize: "14px",
+  color: theme.colors.primaryForeground,
 });
