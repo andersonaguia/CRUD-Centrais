@@ -11,8 +11,11 @@ import {
 } from "../../../../schemas/central.schema";
 import { Title } from "../title";
 import axios from "axios";
+import { useModal } from "../modal/contexts/modal-context";
+import { Feedback } from "../feedback/feedback";
 
 export const CentralForm = () => {
+  const { openModal } = useModal();
   const createCentralMutation = useCreateCentral();
   const { data: models, isLoading, error } = useGetModels();
 
@@ -28,16 +31,17 @@ export const CentralForm = () => {
   const onSubmit = (data: CreateCentralFormSchema) => {
     createCentralMutation.mutate(data, {
       onSuccess: () => {
-        console.log("Central criada com sucesso!");
+        openModal(<Feedback message="Central cadastrada com sucesso!" />);
         reset();
       },
 
       onError: (error) => {
+        let errorMessage = "Ocorreu um erro ao tentar cadastrar a central!";
         if (axios.isAxiosError(error) && error.response) {
-          alert(`${error.response.data.message || error.message}`);
-        } else {
-          alert(`Ocorreu um erro ao tentar cadastrar a central!`);
+          errorMessage = `${error.response.data.message || error.message}`;
         }
+
+        openModal(<Feedback message={errorMessage} isError={true} />);
       },
     });
   };
