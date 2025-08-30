@@ -131,4 +131,8 @@ export class CentralService {
 
     return centralData;
   }
+
+  async countAll(): Promise<number> {
+    return this.centralRepository.countAll({});
+  }
 }

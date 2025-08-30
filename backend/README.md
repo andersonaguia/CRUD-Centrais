@@ -146,6 +146,15 @@ $ npm run test:cov
 Status: 204 No Content
 ```
 
+- `GET /centrals/count` → obter o total de centrais cadastradas
+```JSON
+# Retorno esperado
+
+{
+  "total": 15
+}
+```
+
 - `GET /models` → listar modelos de centrais
 ```JSON
 # Retorno esperado

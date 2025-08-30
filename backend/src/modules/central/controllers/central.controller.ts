@@ -31,6 +31,32 @@ import { UpdateCentralDto } from '../dto/update-central.dto';
 export class CentralController {
   constructor(private readonly centralService: CentralService) {}
 
+  @Get('count')
+  @ApiOperation({
+    summary: Messages.Central.docs.COUNT_SUMMARY,
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: Messages.Central.http.OK,
+    schema: {
+      type: 'object',
+      properties: {
+        total: { type: 'number', example: 42 },
+      },
+    },
+  })
+  async count(): Promise<{ total: number }> {
+    try {
+      const total = await this.centralService.countAll();
+      return { total };
+    } catch (error) {
+      throw new HttpException(
+        Messages.Central.http.INTERNAL_SERVER_ERROR,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
   @Post()
   @ApiOperation({ summary: Messages.Central.docs.CREATE_SUMMARY })
   @ApiResponse({
