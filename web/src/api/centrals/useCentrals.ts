@@ -35,3 +35,19 @@ export const useCreateCentral = () => {
   });
 };
 
+export const useDeleteCentral = () => {
+  const queryClient = useQueryClient();
+  return useMutation<void, Error, string>({
+    mutationFn: async (id) => {
+      await axios.delete(`${API_URL}/centrals/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['centrals'] });
+    },
+  });
+};
+
+
+
+
+
