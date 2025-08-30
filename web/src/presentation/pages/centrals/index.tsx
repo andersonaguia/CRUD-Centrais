@@ -5,10 +5,10 @@ import { Title } from "@components/core/title";
 import * as styles from "./styles/centrals.css";
 import { ColumnDef } from "@tanstack/react-table";
 import { Table } from "@components/core/table";
-
 import { useGetCentrals } from "../../../api/centrals/useCentrals";
 import { Central } from "../../../api/centrals/types";
 import { TableActions } from "@components/core/table/table-actions";
+import { NewCentralButton } from "@components/core/new-central/new-central";
 
 export const CentralsPage = () => {
   const [page, setPage] = useState(1);
@@ -66,9 +66,12 @@ export const CentralsPage = () => {
 
   return (
     <div className={styles.containerPage}>
-      <Title.Root size="medium">
-        <Title.Text>Centrais cadastradas</Title.Text>
-      </Title.Root>
+      <div className={styles.headerContainer}>
+        <Title.Root size="medium">
+          <Title.Text>Centrais cadastradas</Title.Text>
+        </Title.Root>
+        <NewCentralButton />
+      </div>
 
       <div>
         {isLoading ? (
