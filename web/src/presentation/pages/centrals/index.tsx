@@ -9,8 +9,11 @@ import { useGetCentrals } from "../../../api/centrals/useCentrals";
 import { Central } from "../../../api/centrals/types";
 import { TableActions } from "@components/core/table/table-actions";
 import { NewCentralButton } from "@components/core/new-central/new-central";
+import { useModal } from "@components/core/modal/contexts/modal-context";
+import { ConfirmDeleteItem } from "@components/core/confirm-delete-item/confirm-delete-item";
 
 export const CentralsPage = () => {
+  const { openModal } = useModal();
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
 
@@ -53,12 +56,18 @@ export const CentralsPage = () => {
         return (
           <TableActions
             onEdit={() => console.log("Editar central:", row.original)}
-            onDelete={() => console.log("Excluir central:", row.original)}
+            onDelete={() => handleOpenDeleteModal(row.original)}
           />
         );
       },
     },
   ];
+
+  const handleOpenDeleteModal = (central: Central) => {
+    openModal(
+      <ConfirmDeleteItem centralId={central.id} centralName={central.name} />
+    );
+  };
 
   if (error) {
     return <div>Ocorreu um erro: {error.message}</div>;

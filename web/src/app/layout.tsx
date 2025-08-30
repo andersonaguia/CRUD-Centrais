@@ -13,9 +13,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="pt-br" className={fonts.nunito}>
       <body>
-        <ModalProvider>
-          <ReactQueryProvider>{children}</ReactQueryProvider>
-        </ModalProvider>
+        <ReactQueryProvider>
+          <ModalProvider>{children}</ModalProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   );
