@@ -79,3 +79,13 @@ export const useGetCentral = (id: string) => {
     enabled: !!id,
   });
 };
+
+export const useTotalCentrals = () => {
+  return useQuery({
+    queryKey: ['totalCentrals'],
+    queryFn: async () => {
+      const { data } = await axios.get(`${API_URL}/centrals/count`);
+      return data.total;
+    }
+  });
+};

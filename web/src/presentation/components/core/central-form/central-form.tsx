@@ -18,6 +18,7 @@ import axios from "axios";
 import { useModal } from "../modal/contexts/modal-context";
 import { Feedback } from "../feedback/feedback";
 import { useEffect } from "react";
+import { useCentralStore } from "../../../../store/central.store";
 
 export const CentralForm = ({ centralId }: { centralId?: string }) => {
   const { openModal } = useModal();
@@ -33,6 +34,8 @@ export const CentralForm = ({ centralId }: { centralId?: string }) => {
     isLoading: isLoadingCentral,
     error: centralError,
   } = useGetCentral(centralId || "");
+
+  const { totalCentrals, setTotalCentrals } = useCentralStore();
 
   const {
     register,
@@ -75,6 +78,7 @@ export const CentralForm = ({ centralId }: { centralId?: string }) => {
         onSuccess: () => {
           openModal(<Feedback message="Central cadastrada com sucesso!" />);
           reset();
+          setTotalCentrals(totalCentrals + 1);
         },
 
         onError: (error) => {
@@ -104,7 +108,9 @@ export const CentralForm = ({ centralId }: { centralId?: string }) => {
     <form onSubmit={handleSubmit(onSubmit)} className={s.formWrapper}>
       <div className={s.formTitle}>
         <Title.Root size="medium">
-          <Title.Text>{centralData ? centralData.name : "Nova Central"}</Title.Text>
+          <Title.Text>
+            {centralData ? centralData.name : "Nova Central"}
+          </Title.Text>
         </Title.Root>
       </div>
 
