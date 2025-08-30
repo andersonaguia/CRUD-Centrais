@@ -43,6 +43,7 @@ export const Messages = {
       DELETE_SUMMARY: 'Deletar os dados de uma central por ID',
       FIND_ALL_SUMMARY: 'Obter dados de todas as centrais paginado',
       UPDATE_SUMMARY: 'Atualizar os dados de uma central',
+      COUNT_SUMMARY: 'Obter o total de centrais cadastradas',
       FILTER_BY_MAC: 'Filtrar por endereço MAC',
       FILTER_BY_MODEL_ID: 'Filtrar por ID do modelo',
       NAME: {
