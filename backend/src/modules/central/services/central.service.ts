@@ -9,12 +9,14 @@ import { ModelDto } from 'src/modules/model/dto/model.dto';
 import { PaginationDto } from '../dto/pagination.dto';
 import { CentralFilterDto } from '../dto/central-filter.dto';
 import { UpdateCentralDto } from '../dto/update-central.dto';
+import { EventsGateway } from 'src/modules/events/events.gateway';
 
 @Injectable()
 export class CentralService {
   constructor(
     private readonly centralRepository: CentralRepository,
     private readonly modelService: ModelService,
+    private readonly eventsGateway: EventsGateway,
   ) {}
 
   async create(newCentral: CreateCentralDto): Promise<Central> {
@@ -27,7 +29,13 @@ export class CentralService {
       };
     }
 
-    return this.centralRepository.create(newCentral);
+    const createdCentral = await this.centralRepository.create(newCentral);
+
+    this.eventsGateway.sendNewCentralNotification(
+      `${Messages.Central.events.NEW_CENTRAL_AVAILABLE} ${createdCentral.name}`,
+    );
+
+    return createdCentral;
   }
 
   async findOneById(id: number): Promise<CentralDataDto> {
@@ -96,7 +104,10 @@ export class CentralService {
     return { data: mappedCentrals, total };
   }
 
-  async update(id: number, updateCentralDto: UpdateCentralDto): Promise<CentralDataDto> {
+  async update(
+    id: number,
+    updateCentralDto: UpdateCentralDto,
+  ): Promise<CentralDataDto> {
     const existingCentral = await this.centralRepository.findOneById(id);
     if (!existingCentral) {
       throw {
@@ -106,7 +117,9 @@ export class CentralService {
     }
 
     if (updateCentralDto.modelId) {
-      const model = await this.modelService.findOneById(updateCentralDto.modelId);
+      const model = await this.modelService.findOneById(
+        updateCentralDto.modelId,
+      );
       if (!model) {
         throw {
           code: HttpStatus.NOT_FOUND,
@@ -115,19 +128,22 @@ export class CentralService {
       }
     }
 
-    const updatedCentral = await this.centralRepository.update(id, updateCentralDto);
+    const updatedCentral = await this.centralRepository.update(
+      id,
+      updateCentralDto,
+    );
 
     const centralData = new CentralDataDto();
     centralData.id = updatedCentral.id;
     centralData.name = updatedCentral.name;
     centralData.mac = updatedCentral.mac;
 
-    if (updatedCentral.model) { 
+    if (updatedCentral.model) {
       const modelData = new ModelDto();
       modelData.id = updatedCentral.model.id;
       modelData.name = updatedCentral.model.name;
       centralData.model = modelData;
-    } 
+    }
 
     return centralData;
   }
