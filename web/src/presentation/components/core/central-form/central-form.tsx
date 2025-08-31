@@ -14,15 +14,13 @@ import {
   CreateCentralFormSchema,
 } from "../../../../schemas/central.schema";
 import { Title } from "../title";
-import axios from "axios";
-import { useModal } from "../modal/contexts/modal-context";
-import { Feedback } from "../feedback/feedback";
 import { useEffect } from "react";
 import { useCentralStore } from "../../../../store/central.store";
 import { Button } from "../button/button";
+import { toast } from "react-toastify";
+import { getAxiosErrorMessage } from "../../../../api/utils/error-handler";
 
 export const CentralForm = ({ centralId }: { centralId?: string }) => {
-  const { openModal } = useModal();
   const createCentralMutation = useCreateCentral();
   const updateCentralMutation = useUpdateCentral();
   const {
@@ -62,33 +60,31 @@ export const CentralForm = ({ centralId }: { centralId?: string }) => {
         { id: centralId, data },
         {
           onSuccess: () => {
-            openModal(<Feedback message="Central atualizada com sucesso!" />);
+            toast.success("Central atualizada com sucesso!");
           },
           onError: (error) => {
-            let errorMessage = "Ocorreu um erro ao tentar editar a central!";
-            if (axios.isAxiosError(error) && error.response) {
-              errorMessage = `${error.message}`;
-            }
-
-            openModal(<Feedback message={errorMessage} isError={true} />);
+            const errorMessage = getAxiosErrorMessage(
+              error,
+              "Ocorreu um erro ao tentar editar a central!"
+            );
+            toast.error(errorMessage);
           },
         }
       );
     } else {
       createCentralMutation.mutate(data, {
         onSuccess: () => {
-          openModal(<Feedback message="Central cadastrada com sucesso!" />);
+          toast.success("Central cadastrada com sucesso!");
           reset();
           setTotalCentrals(totalCentrals + 1);
         },
 
         onError: (error) => {
-          let errorMessage = "Ocorreu um erro ao tentar cadastrar a central!";
-          if (axios.isAxiosError(error) && error.response) {
-            errorMessage = `${error.message}`;
-          }
-
-          openModal(<Feedback message={errorMessage} isError={true} />);
+          const errorMessage = getAxiosErrorMessage(
+            error,
+            "Ocorreu um erro ao tentar cadastrar a central!"
+          );
+          toast.error(errorMessage);
         },
       });
     }
