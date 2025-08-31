@@ -43,6 +43,20 @@ export const trHover = style({
   },
 });
 
+export const trEven = style({
+  background: theme.colors.tableRowEven,
+  selectors: {
+    "&:hover": { background: theme.colors.hoveredOptionBackground },
+  },
+});
+
+export const trOdd = style({
+  background: theme.colors.tableRowOdd,
+  selectors: {
+    "&:hover": { background: theme.colors.hoveredOptionBackground },
+  },
+});
+
 export const pagination = style({
   display: "flex",
   alignItems: "center",

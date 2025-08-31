@@ -36,8 +36,11 @@ export function TableRoot<TData>({
           ))}
         </thead>
         <tbody>
-          {table.getRowModel().rows.map((row) => (
-            <tr key={row.id} className={s.trHover}>
+          {table.getRowModel().rows.map((row, index) => (
+            <tr 
+              key={row.id} 
+              className={index % 2 === 0 ? s.trEven : s.trOdd}
+            >
               {row.getVisibleCells().map((cell) => (
                 <td key={cell.id} className={s.td}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
