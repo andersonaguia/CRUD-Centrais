@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Button } from "@components/core/button/button";
+import { Button } from "../button/button";
 import { FC } from "react";
 import { Central } from "../../../../api/centrals/types";
 import { EditIcon } from "@components/icons/edit-item";

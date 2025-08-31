@@ -32,7 +32,7 @@ export const ConfirmDeleteItem: FC<ConfirmDeleteItemProps> = ({
       onError: (error) => {
         let errorMessage = "Ocorreu um erro ao tentar deletar a central!";
         if (axios.isAxiosError(error) && error.response) {
-          errorMessage = `${error.response.data.message || error.message}`;
+          errorMessage = `${error.message}`;
         }
         openModal(<Feedback message={errorMessage} isError={true} />);
       },

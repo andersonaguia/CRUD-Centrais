@@ -16,7 +16,7 @@
   "scripts": {
     "dev": "next dev -p 3101",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 5001",
     "lint": "next lint",
     "json-server": "json-server --watch db.json --port 5000"
   },

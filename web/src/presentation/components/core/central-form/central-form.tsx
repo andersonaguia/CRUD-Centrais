@@ -67,7 +67,7 @@ export const CentralForm = ({ centralId }: { centralId?: string }) => {
           onError: (error) => {
             let errorMessage = "Ocorreu um erro ao tentar editar a central!";
             if (axios.isAxiosError(error) && error.response) {
-              errorMessage = `${error.response.data.message || error.message}`;
+              errorMessage = `${error.message}`;
             }
 
             openModal(<Feedback message={errorMessage} isError={true} />);
@@ -85,7 +85,7 @@ export const CentralForm = ({ centralId }: { centralId?: string }) => {
         onError: (error) => {
           let errorMessage = "Ocorreu um erro ao tentar cadastrar a central!";
           if (axios.isAxiosError(error) && error.response) {
-            errorMessage = `${error.response.data.message || error.message}`;
+            errorMessage = `${error.message}`;
           }
 
           openModal(<Feedback message={errorMessage} isError={true} />);
@@ -108,64 +108,68 @@ export const CentralForm = ({ centralId }: { centralId?: string }) => {
   return (
     <div className={s.containerPage}>
       <Title.Root size="large">
-          <Title.Text>
-            {centralData ? "Editar Central" : "Cadastro de Central"}
-          </Title.Text>
-        </Title.Root>
-    <form onSubmit={handleSubmit(onSubmit)} className={s.formWrapper}>
-      <div className={s.formTitle}>
-        <Title.Root size="medium">
-          <Title.Text>
-            {centralData ? centralData.name : "Nova Central"}
-          </Title.Text>
-        </Title.Root>
-      </div>
+        <Title.Text>
+          {centralData ? "Editar Central" : "Cadastro de Central"}
+        </Title.Text>
+      </Title.Root>
+      <form onSubmit={handleSubmit(onSubmit)} className={s.formWrapper}>
+        <div className={s.formTitle}>
+          <Title.Root size="medium">
+            <Title.Text>
+              {centralData ? centralData.name : "Nova Central"}
+            </Title.Text>
+          </Title.Root>
+        </div>
 
-      <div className={s.formField}>
-        <label htmlFor="name" className={s.formLabel}>
-          Nome
-        </label>
-        <input id="name" className={s.formInput} {...register("name")} />
-        {errors.name && (
-          <span className={s.errorMessage}>{errors.name.message}</span>
-        )}
-      </div>
+        <div className={s.formField}>
+          <label htmlFor="name" className={s.formLabel}>
+            Nome
+          </label>
+          <input id="name" className={s.formInput} {...register("name")} />
+          {errors.name && (
+            <span className={s.errorMessage}>{errors.name.message}</span>
+          )}
+        </div>
 
-      <div className={s.formField}>
-        <label htmlFor="mac" className={s.formLabel}>
-          Endereço MAC
-        </label>
-        <input id="mac" className={s.formInput} {...register("mac")} />
-        {errors.mac && (
-          <span className={s.errorMessage}>{errors.mac.message}</span>
-        )}
-      </div>
+        <div className={s.formField}>
+          <label htmlFor="mac" className={s.formLabel}>
+            Endereço MAC
+          </label>
+          <input id="mac" className={s.formInput} {...register("mac")} />
+          {errors.mac && (
+            <span className={s.errorMessage}>{errors.mac.message}</span>
+          )}
+        </div>
 
-      <div className={s.formField}>
-        <label htmlFor="modelId" className={s.formLabel}>
-          Modelo
-        </label>
-        <select id="modelId" className={s.formSelect} {...register("modelId")}>
-          <option value="">Selecione um modelo</option>
-          {models?.map((model) => (
-            <option key={model.id} value={model.id}>
-              {model.name}
-            </option>
-          ))}
-        </select>
-        {errors.modelId && (
-          <span className={s.errorMessage}>{errors.modelId.message}</span>
-        )}
-      </div>
+        <div className={s.formField}>
+          <label htmlFor="modelId" className={s.formLabel}>
+            Modelo
+          </label>
+          <select
+            id="modelId"
+            className={s.formSelect}
+            {...register("modelId")}
+          >
+            <option value="">Selecione um modelo</option>
+            {models?.map((model) => (
+              <option key={model.id} value={model.id}>
+                {model.name}
+              </option>
+            ))}
+          </select>
+          {errors.modelId && (
+            <span className={s.errorMessage}>{errors.modelId.message}</span>
+          )}
+        </div>
 
-      <Button
-        type="submit"
-        className={s.formButton}
-        disabled={createCentralMutation.isPending}
-      >
-        {centralData ? "Atualizar" : "Cadastrar"}
-      </Button>
-    </form>
+        <Button
+          type="submit"
+          className={s.formButton}
+          disabled={createCentralMutation.isPending}
+        >
+          {centralData ? "Atualizar" : "Cadastrar"}
+        </Button>
+      </form>
     </div>
   );
 };

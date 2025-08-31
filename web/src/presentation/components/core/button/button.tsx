@@ -2,7 +2,7 @@ import React, { FC, ReactNode } from "react";
 import * as s from "./styles/button-style.css";
 
 interface ButtonProps extends React.ComponentPropsWithoutRef<"button"> {
-  children: ReactNode;
+  children?: ReactNode;
   icon?: FC<any>;
 }
 
