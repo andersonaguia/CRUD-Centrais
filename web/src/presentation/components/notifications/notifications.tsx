@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { io, Socket } from "socket.io-client";
 import { API_URL } from "../../../common/constants";
+import { toast } from "react-toastify";
 
 let socket: Socket;
 
@@ -11,7 +12,7 @@ export default function Notifications() {
     socket = io(`${API_URL}/notifications`);
 
     socket.on("newCentral", (message) => {
-      console.log(message);
+      toast.success(message);
     });
 
     return () => {
@@ -19,5 +20,5 @@ export default function Notifications() {
     };
   }, []);
 
-  return null; 
+  return null;
 }
