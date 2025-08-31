@@ -1,5 +1,9 @@
 export const Messages = {
   default: {
+    logs: {
+      APP_RUNNING: 'Application is running on: http://localhost:',
+      SOCKET_IO_READY: 'Socket.IO Gateway is ready for connections',
+    },
     pagination: {
       PAGE_NUMBER: 'Número da página',
       LIMIT_PER_PAGE: 'Limite de itens por página',
@@ -43,6 +47,7 @@ export const Messages = {
       DELETE_SUMMARY: 'Deletar os dados de uma central por ID',
       FIND_ALL_SUMMARY: 'Obter dados de todas as centrais paginado',
       UPDATE_SUMMARY: 'Atualizar os dados de uma central',
+      COUNT_SUMMARY: 'Obter o total de centrais cadastradas',
       FILTER_BY_MAC: 'Filtrar por endereço MAC',
       FILTER_BY_MODEL_ID: 'Filtrar por ID do modelo',
       NAME: {
@@ -57,6 +62,9 @@ export const Messages = {
         example: 2,
         description: 'ID do modelo associado à central',
       },
+    },
+    events: {
+      NEW_CENTRAL_AVAILABLE: 'Nova central adicionada:',
     },
     validators: {
       NOT_NULL: 'Obrigatório preencher o campo',

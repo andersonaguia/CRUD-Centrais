@@ -41,24 +41,21 @@ export class CentralRepository {
   }
 
   async deleteById(id: number): Promise<void> {
-    const result = await this.prisma.central.updateMany({
-      where: {
-        id,
-        deletedAt: null,
-      },
-      data: {
-        deletedAt: new Date(),
-      },
-    });
-
-    if (result.count === 0) {
-      throw {
-        code: HttpStatus.NOT_FOUND,
-        message: `${Messages.Central.http.ID_NOT_FOUND_ERROR} ${id}`,
-      };
+    try {
+      await this.prisma.central.delete({
+        where: { id },
+      });
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === 'P2025') {
+          throw {
+            code: HttpStatus.NOT_FOUND,
+            message: `${Messages.Central.http.ID_NOT_FOUND_ERROR} ${id}`,
+          };
+        }
+      }
+      throw error;
     }
-
-    return;
   }
 
   async findAll(

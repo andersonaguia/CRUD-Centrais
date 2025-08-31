@@ -1,5 +1,6 @@
 export const COLOR_PALETTE = {
   neutral: {
+    0: "#ffffff",
     50: "#fafafa",
     200: "#9fa1a4",
     250: "#4A4F56",
