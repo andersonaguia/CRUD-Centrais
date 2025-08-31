@@ -140,7 +140,7 @@ $ npm run test:cov
 }  
 ```
 
-- `DELETE /centrals/:id` → remover uma central (soft delete)
+- `DELETE /centrals/:id` → remover uma central definitivamente
   
 ```
 Status: 204 No Content
