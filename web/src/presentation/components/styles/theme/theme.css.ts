@@ -20,6 +20,7 @@ export const theme = createGlobalTheme(":root", {
     success: COLOR_PALETTE.green[500],
     successNeutral: COLOR_PALETTE.green[600],
     hoveredSuccessNeutral: COLOR_PALETTE.green[500],
+    textNeutral: COLOR_PALETTE.neutral[50],
     successWhite: COLOR_PALETTE.neutral[950],
     penWhite: COLOR_PALETTE.neutral[50],
     hoveredSuccess: COLOR_PALETTE.green[400],

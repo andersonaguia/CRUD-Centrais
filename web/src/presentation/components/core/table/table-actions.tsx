@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { useRouter } from "next/navigation";
 import * as s from "./styles/table.css";
 import { Central } from "../../../../api/centrals/types";
 import { useModal } from "../modal/contexts/modal-context";
@@ -14,12 +13,7 @@ interface TableActionsProps {
 }
 
 export const TableActions = ({ central }: TableActionsProps) => {
-  const router = useRouter();
   const { openModal } = useModal();
-
-  const handleEdit = () => {
-    router.push(`/centrals/${central.id}/edit`);
-  };
 
   const handleDelete = () => {
     openModal(

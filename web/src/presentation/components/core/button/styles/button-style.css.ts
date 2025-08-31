@@ -2,28 +2,29 @@ import { theme } from "@components/styles/theme/theme.css";
 import { style } from "@vanilla-extract/css";
 
 export const button = style({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: '8px',
-  padding: '12px 24px',
-  border: 'none',
-  borderRadius: '6px',
-  cursor: 'pointer',
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: "8px",
+  padding: "12px 24px",
+  border: "none",
+  borderRadius: "6px",
+  cursor: "pointer",
   background: theme.colors.success,
-  color: theme.colors.successWhite,
+  color: theme.colors.textNeutral,
   fontWeight: 600,
-  transition: 'background-color 0.2s ease-in-out',
+  transition: "background-color 0.2s ease-in-out",
   selectors: {
-    '&:hover': {
+    "&:hover": {
       background: theme.colors.hoveredSuccessNeutral,
     },
-    '&:active': {
+    "&:active": {
       background: theme.colors.successNeutral,
+      opacity: "0.5",
     },
-    '&:disabled': {
-      opacity: 0.5,
-      cursor: 'not-allowed',
+    "&:disabled": {
+      opacity: "0.5",
+      cursor: "not-allowed",
     },
   },
 });

@@ -9,6 +9,7 @@ import { Feedback } from "@components/core/feedback/feedback";
 import { Button } from "@components/core/button/button";
 import { useDeleteCentral } from "../../../../api/centrals/useCentrals";
 import { Container } from "../container";
+import { useCentralStore } from "../../../../store/central.store";
 
 export const ConfirmDeleteItem: FC<ConfirmDeleteItemProps> = ({
   centralId,
@@ -16,10 +17,12 @@ export const ConfirmDeleteItem: FC<ConfirmDeleteItemProps> = ({
 }) => {
   const { openModal, closeModal } = useModal();
   const deleteCentralMutation = useDeleteCentral();
+  const { totalCentrals, setTotalCentrals } = useCentralStore();
 
   const handleConfirmDelete = () => {
     deleteCentralMutation.mutate(centralId, {
       onSuccess: () => {
+        setTotalCentrals(totalCentrals - 1);
         openModal(
           <Feedback
             message={`Central "${centralName}" deletada com sucesso!`}

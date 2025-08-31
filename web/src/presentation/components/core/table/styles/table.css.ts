@@ -8,16 +8,6 @@ export const wrapper = style({
   boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
 });
 
-export const filterInput = style({
-  marginBottom: "8px",
-  padding: "8px",
-  border: `1px solid ${theme.colors.neutral}`,
-  borderRadius: "6px",
-  width: "100%",
-  background: theme.colors.primarySurface,
-  color: theme.colors.primaryForeground,
-});
-
 export const table = style({
   width: "100%",
   borderCollapse: "collapse",
@@ -60,7 +50,7 @@ export const button = style({
   borderRadius: "6px",
   cursor: "pointer",
   background: theme.colors.primarySurface,
-  color: theme.colors.primaryForeground,
+  color: theme.colors.textNeutral,
   selectors: {
     "&:disabled": {
       opacity: 0.5,
@@ -101,7 +91,7 @@ export const deleteButton = style({
   selectors: {
     "&:hover": {
       color: theme.colors.hoveredAlert,
-      opacity: 0.5
+      opacity: 0.5,
     },
   },
 });
@@ -113,4 +103,63 @@ export const navigation = style({
   marginTop: "12px",
   fontSize: "14px",
   color: theme.colors.primaryForeground,
+});
+
+export const filtersContainer = style({
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center", 
+  justifyContent: "space-between",
+  gap: "1.5rem",
+  marginBottom: "2rem",
+  padding: "1rem",
+  border: `1px solid ${theme.colors.tableColorPrimary}`,
+  borderRadius: "12px",
+  boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+});
+
+export const filterItems = style({
+  display: "flex",
+  flexDirection: "column",
+  padding: "1rem",
+  flexGrow: 1, 
+});
+
+export const filterLabel = style({
+  fontSize: "1.2rem",
+  marginBottom: "1rem",
+});
+
+export const filterInput = style({
+  width: "100%", 
+  padding: "8px",
+  border: `1px solid ${theme.colors.tableColorPrimary}`,
+  background: theme.colors.tableColorPrimary,
+  color: theme.colors.primaryForeground,
+});
+
+export const selectFilter = style({
+  width: "100%", 
+  padding: "8px",
+  border: `1px solid ${theme.colors.neutral}`,
+  fontSize: "1.5rem",
+  color: theme.colors.primaryForeground,
+  background: theme.colors.tableColorPrimary,
+  appearance: "none",
+});
+
+export const clearFiltersButton = style({
+  padding: "1rem",
+  marginTop: "2rem",
+  backgroundColor: theme.colors.alert,
+  color: theme.colors.penWhite,
+  borderRadius: "3px",
+  cursor: "pointer",
+  transition: "background-color 0.2s ease-in-out",
+  selectors: {
+    "&:hover": {
+      backgroundColor: theme.colors.hoveredAlert,
+      opacity: "0.5",
+    },
+  },
 });

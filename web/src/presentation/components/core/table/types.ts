@@ -23,3 +23,11 @@ export interface TableActionsProps {
   onEdit: () => void;
   onDelete: () => void;
 }
+
+export interface TableFiltersProps {
+  setFilters: (filters: {
+    name?: string;
+    mac?: string;
+    modelId?: number;
+  }) => void;
+}
