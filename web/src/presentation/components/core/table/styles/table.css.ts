@@ -6,6 +6,8 @@ export const wrapper = style({
   border: `1px solid ${theme.colors.tableColorPrimary}`,
   borderRadius: "12px",
   boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+  width: "100%",
+  maxWidth: "1400px",
 });
 
 export const table = style({
@@ -116,6 +118,8 @@ export const filtersContainer = style({
   border: `1px solid ${theme.colors.tableColorPrimary}`,
   borderRadius: "12px",
   boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+  width: "90%",
+  maxWidth: "1400px",
 });
 
 export const filterItems = style({

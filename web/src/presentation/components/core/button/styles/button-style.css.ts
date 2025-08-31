@@ -10,17 +10,17 @@ export const button = style({
   border: "none",
   borderRadius: "6px",
   cursor: "pointer",
-  background: theme.colors.success,
+  background: theme.colors.successNeutral,
   color: theme.colors.textNeutral,
   fontWeight: 600,
   transition: "background-color 0.2s ease-in-out",
+  width: "200px",
   selectors: {
     "&:hover": {
       background: theme.colors.hoveredSuccessNeutral,
     },
     "&:active": {
       background: theme.colors.successNeutral,
-      opacity: "0.5",
     },
     "&:disabled": {
       opacity: "0.5",

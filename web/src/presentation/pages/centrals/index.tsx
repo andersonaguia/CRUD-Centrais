@@ -70,7 +70,7 @@ export const CentralsPage = () => {
       </div>
       <TableFilters setFilters={setFilters} />
 
-      <div>
+      <div className={styles.tableContainer}>
         {isLoading ? (
           <p>Carregando...</p>
         ) : (

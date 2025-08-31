@@ -1,5 +1,6 @@
 import { CentralForm } from "@components/core/central-form/central-form";
 import { FC } from "react";
+import * as s from "@pages/centrals/styles/centrals.css";
 
 interface EditPageProps {
   params: {
@@ -10,7 +11,11 @@ interface EditPageProps {
 const EditPage: FC<EditPageProps> = ({ params }) => {
   const centralId = params.id;
 
-  return <CentralForm centralId={centralId} />;
+  return (
+    <div className={s.containerPage}>
+      <CentralForm centralId={centralId} />
+    </div>
+  );
 };
 
 export default EditPage;

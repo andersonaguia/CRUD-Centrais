@@ -19,6 +19,7 @@ import { useModal } from "../modal/contexts/modal-context";
 import { Feedback } from "../feedback/feedback";
 import { useEffect } from "react";
 import { useCentralStore } from "../../../../store/central.store";
+import { Button } from "../button/button";
 
 export const CentralForm = ({ centralId }: { centralId?: string }) => {
   const { openModal } = useModal();
@@ -105,6 +106,12 @@ export const CentralForm = ({ centralId }: { centralId?: string }) => {
   }
 
   return (
+    <div className={s.containerPage}>
+      <Title.Root size="large">
+          <Title.Text>
+            {centralData ? "Editar Central" : "Cadastro de Central"}
+          </Title.Text>
+        </Title.Root>
     <form onSubmit={handleSubmit(onSubmit)} className={s.formWrapper}>
       <div className={s.formTitle}>
         <Title.Root size="medium">
@@ -151,13 +158,14 @@ export const CentralForm = ({ centralId }: { centralId?: string }) => {
         )}
       </div>
 
-      <button
+      <Button
         type="submit"
         className={s.formButton}
         disabled={createCentralMutation.isPending}
       >
         {centralData ? "Atualizar" : "Cadastrar"}
-      </button>
+      </Button>
     </form>
+    </div>
   );
 };

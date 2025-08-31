@@ -18,7 +18,7 @@ export const formWrapper = style({
   flexDirection: "column",
   gap: "16px",
   width: "500px",
-  marginTop: "2rem",
+  maxWidth: "90vw",
 });
 
 export const formTitle = style({
@@ -98,3 +98,13 @@ export const formButton = style({
     },
   },
 });
+
+export const containerPage = style ({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  padding: "5rem 0",
+  gap: "2rem",
+  width: "100%",
+  maxWidth: "1400px",
+})
