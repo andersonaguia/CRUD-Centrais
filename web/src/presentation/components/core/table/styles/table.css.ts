@@ -8,6 +8,9 @@ export const wrapper = style({
   boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
   width: "100%",
   maxWidth: "1400px",
+  maxHeight: "600px",
+  overflow: "auto",
+  position: "relative",
 });
 
 export const table = style({
@@ -23,6 +26,9 @@ export const th = style({
   background: theme.colors.secondarySurface,
   color: theme.colors.primaryForeground,
   fontWeight: 600,
+  position: "sticky",
+  top: 0,
+  zIndex: 10,
 });
 
 export const td = style({
@@ -44,6 +50,43 @@ export const pagination = style({
   marginTop: "12px",
   fontSize: "14px",
   color: theme.colors.primaryForeground,
+});
+
+export const paginationInfo = style({
+  display: "flex",
+  alignItems: "center",
+  gap: "24px",
+});
+
+export const itemsPerPage = style({
+  display: "flex",
+  alignItems: "center",
+  gap: "8px",
+});
+
+export const itemsPerPageLabel = style({
+  fontSize: "14px",
+  color: theme.colors.primaryForeground,
+  whiteSpace: "nowrap",
+});
+
+export const itemsPerPageSelect = style({
+  padding: "4px 8px",
+  border: "none",
+  borderRadius: "6px",
+  fontSize: "14px",
+  color: theme.colors.primaryForeground,
+  background: theme.colors.primarySurface,
+  cursor: "pointer",
+  selectors: {
+    "&:hover": {
+      borderColor: theme.colors.hoveredNeutral,
+    },
+    "&:focus": {
+      outline: "none",
+      borderColor: theme.colors.primaryForeground,
+    },
+  },
 });
 
 export const button = style({
@@ -140,16 +183,17 @@ export const filterInput = style({
   border: `1px solid ${theme.colors.tableColorPrimary}`,
   background: theme.colors.tableColorPrimary,
   color: theme.colors.primaryForeground,
+  borderRadius: "6px",
 });
 
 export const selectFilter = style({
   width: "100%", 
   padding: "8px",
-  border: `1px solid ${theme.colors.neutral}`,
+  border: "none",
   fontSize: "1.5rem",
   color: theme.colors.primaryForeground,
   background: theme.colors.tableColorPrimary,
-  appearance: "none",
+  borderRadius: "6px",
 });
 
 export const clearFiltersButton = style({

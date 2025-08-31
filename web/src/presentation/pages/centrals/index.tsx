@@ -9,7 +9,6 @@ import { useGetCentrals } from "../../../api/centrals/useCentrals";
 import { Central } from "../../../api/centrals/types";
 import { TableActions } from "@components/core/table/table-actions";
 import { NewCentralButton } from "@components/core/new-central/new-central";
-import { useCentralStore } from "../../../store/central.store";
 import { TableFilters } from "@components/core/table/table-filters";
 
 export const CentralsPage = () => {
@@ -28,6 +27,18 @@ export const CentralsPage = () => {
     mac: filters.mac,
     modelId: filters.modelId,
   });
+
+  const handleFiltersChange = (newFilters: {
+    name?: string;
+    mac?: string;
+    modelId?: number;
+  }) => {
+    setFilters({
+      name: newFilters.name ?? "",
+      mac: newFilters.mac ?? "",
+      modelId: newFilters.modelId,
+    });
+  };
 
   const columns: ColumnDef<Central>[] = [
     {
@@ -68,7 +79,7 @@ export const CentralsPage = () => {
         </Title.Root>
         <NewCentralButton />
       </div>
-      <TableFilters setFilters={setFilters} />
+      <TableFilters setFilters={handleFiltersChange} />
 
       <div className={styles.tableContainer}>
         {isLoading ? (

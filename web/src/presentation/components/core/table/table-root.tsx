@@ -50,17 +50,37 @@ export function TableRoot<TData>({
       
       {serverPagination && (
         <div className={s.pagination}>
-          <span>
-            Página {serverPagination.page} de{" "}
-            {Math.ceil(serverPagination.total / serverPagination.limit)}
-          </span>
+          <div className={s.paginationInfo}>
+            <span>
+              Página {serverPagination.page} de{" "}
+              {Math.ceil(serverPagination.total / serverPagination.limit)}
+            </span>
+            <div className={s.itemsPerPage}>
+              <label htmlFor="itemsPerPage" className={s.itemsPerPageLabel}>
+                Itens por página:
+              </label>
+              <select
+                id="itemsPerPage"
+                className={s.itemsPerPageSelect}
+                value={serverPagination.limit}
+                onChange={(e) => serverPagination.onLimitChange(Number(e.target.value))}
+              >
+                <option value={10}>10</option>
+                <option value={25}>25</option>
+                <option value={50}>50</option>
+                <option value={100}>100</option>
+              </select>
+            </div>
+          </div>
           <div className={s.navigation}>
             <Button
               className={s.button}
               disabled={serverPagination.page === 1}
               onClick={() => serverPagination.onPageChange(serverPagination.page - 1)}
               icon={ChevronLeftIcon}
-            />
+            >
+              {" "}
+            </Button>
             <Button
               className={s.button}
               disabled={
@@ -69,7 +89,9 @@ export function TableRoot<TData>({
               }
               onClick={() => serverPagination.onPageChange(serverPagination.page + 1)}
               icon={ChevronRightIcon}
-            />
+            >
+              {" "}
+            </Button>
           </div>
         </div>
       )}

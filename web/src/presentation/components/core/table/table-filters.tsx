@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import * as s from "./styles/table.css";
 import { Button } from "../button/button";
 import { useGetModels } from "../../../../api/models/useModels";
@@ -19,11 +19,23 @@ export const TableFilters = ({ setFilters }: TableFiltersProps) => {
     setNameFilter("");
     setMacFilter("");
     setModelIdFilter(undefined);
+    setFilters({ name: "", mac: "", modelId: undefined });
   };
 
-  useEffect(() => {
-    setFilters({ name: nameFilter, mac: macFilter, modelId: modelIdFilter });
-  }, [nameFilter, macFilter, modelIdFilter, setFilters]);
+  const handleNameChange = (value: string) => {
+    setNameFilter(value);
+    setFilters({ name: value, mac: macFilter, modelId: modelIdFilter });
+  };
+
+  const handleMacChange = (value: string) => {
+    setMacFilter(value);
+    setFilters({ name: nameFilter, mac: value, modelId: modelIdFilter });
+  };
+
+  const handleModelIdChange = (value: number | undefined) => {
+    setModelIdFilter(value);
+    setFilters({ name: nameFilter, mac: macFilter, modelId: value });
+  };
 
   return (
     <div className={s.filtersContainer}>
@@ -37,7 +49,7 @@ export const TableFilters = ({ setFilters }: TableFiltersProps) => {
           placeholder="Nome da central"
           className={s.filterInput}
           value={nameFilter}
-          onChange={(e) => setNameFilter(e.target.value)}
+          onChange={(e) => handleNameChange(e.target.value)}
         />
       </div>
 
@@ -51,7 +63,7 @@ export const TableFilters = ({ setFilters }: TableFiltersProps) => {
           placeholder="Endereço MAC"
           className={s.filterInput}
           value={macFilter}
-          onChange={(e) => setMacFilter(e.target.value)}
+          onChange={(e) => handleMacChange(e.target.value)}
         />
       </div>
 
@@ -65,7 +77,8 @@ export const TableFilters = ({ setFilters }: TableFiltersProps) => {
           value={modelIdFilter || ""}
           onChange={(e) => {
             const value = e.target.value;
-            setModelIdFilter(value === "" ? undefined : Number(value));
+            const modelId = value === "" ? undefined : Number(value);
+            handleModelIdChange(modelId);
           }}
         >
           <option value="">Todos</option>
