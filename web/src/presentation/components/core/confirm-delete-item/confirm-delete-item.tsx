@@ -24,6 +24,7 @@ export const ConfirmDeleteItem: FC<ConfirmDeleteItemProps> = ({
       onSuccess: () => {
         setTotalCentrals(totalCentrals - 1);
         toast.success(`Central "${centralName}" excluída com sucesso!`);
+        closeModal();
       },
       onError: (error) => {
         const errorMessage = getAxiosErrorMessage(
@@ -31,6 +32,7 @@ export const ConfirmDeleteItem: FC<ConfirmDeleteItemProps> = ({
           "Ocorreu um erro ao tentar excluir a central!"
         );
         toast.error(errorMessage);
+        closeModal();
       },
     });
   };
