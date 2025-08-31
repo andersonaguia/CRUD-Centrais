@@ -85,7 +85,8 @@ export const formButton = style({
   borderRadius: "6px",
   cursor: "pointer",
   background: theme.colors.success,
-  color: theme.colors.successWhite,
+  color: theme.colors.textNeutral,
+  fontSize: "16px",
   fontWeight: 600,
   transition: "background-color 0.2s ease-in-out",
   selectors: {

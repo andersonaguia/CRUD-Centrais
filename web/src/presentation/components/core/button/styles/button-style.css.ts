@@ -12,6 +12,7 @@ export const button = style({
   cursor: "pointer",
   background: theme.colors.successNeutral,
   color: theme.colors.textNeutral,
+  fontSize: "16px",
   fontWeight: 600,
   transition: "background-color 0.2s ease-in-out",
   width: "200px",
