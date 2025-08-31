@@ -6,8 +6,7 @@ import {
   UpdateCentralDto,
   GetCentralsParams,
 } from "./types";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+import { API_URL } from "../../common/constants";
 
 export const useGetCentrals = (params: GetCentralsParams) => {
   const urlParams = new URLSearchParams({

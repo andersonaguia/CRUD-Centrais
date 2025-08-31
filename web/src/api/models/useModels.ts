@@ -1,8 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { Model } from './types';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+import { API_URL } from '../../common/constants';
 
 export const useGetModels = () => {
   return useQuery<Model[]>({
