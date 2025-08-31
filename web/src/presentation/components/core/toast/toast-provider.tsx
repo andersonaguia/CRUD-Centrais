@@ -14,7 +14,7 @@ export default function ToastProvider() {
       closeOnClick
       pauseOnHover
       draggable
-      theme="dark"
+      theme="light"
       toastClassName={s.toast}
     />
   );

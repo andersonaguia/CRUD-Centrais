@@ -12,7 +12,7 @@ export default function Notifications() {
     socket = io(`${API_URL}/notifications`);
 
     socket.on("newCentral", (message) => {
-      toast.success(message);
+      toast.info(message);
     });
 
     return () => {
