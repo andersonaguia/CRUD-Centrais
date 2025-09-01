@@ -70,7 +70,7 @@ $ npm run test:cov
 ```
 
 ## Rotas da aplicação
-### As rotas da aplicação estão documentadas via [Swagger](https://swagger.io/) e você pode utilizá-las acessando [localhost:3000/api](http://localhost:3000/api)
+### As rotas da aplicação estão documentadas via [Swagger](https://swagger.io/) e após rodar o projeto você pode utilizá-las acessando [localhost:3000/api](http://localhost:3000/api)
 
 - `GET /` → verificar o estado da api
 ```JSON
