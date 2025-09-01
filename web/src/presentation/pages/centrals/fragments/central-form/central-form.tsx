@@ -3,22 +3,15 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as s from "./styles/central-form.css";
-import { useGetModels } from "../../../../api/models/useModels";
-import {
-  useCreateCentral,
-  useGetCentral,
-  useUpdateCentral,
-} from "../../../../api/centrals/useCentrals";
-import {
-  centralSchema,
-  CreateCentralFormSchema,
-} from "../../../../schemas/central.schema";
-import { Title } from "../title";
+import { useCreateCentral, useGetCentral, useUpdateCentral } from "../../../../../api/centrals/useCentrals";
+import { useGetModels } from "../../../../../api/models/useModels";
+import { useCentralStore } from "../../../../../stores/central.store";
+import { centralSchema, CreateCentralFormSchema } from "../../../../../schemas/central.schema";
 import { useEffect } from "react";
-import { useCentralStore } from "../../../../store/central.store";
-import { Button } from "../button/button";
 import { toast } from "react-toastify";
-import { getAxiosErrorMessage } from "../../../../api/utils/error-handler";
+import { getAxiosErrorMessage } from "../../../../../api/utils/error-handler";
+import { Title } from "@components/core/title";
+import { Button } from "@components/core/button/button";
 
 export const CentralForm = ({ centralId }: { centralId?: string }) => {
   const createCentralMutation = useCreateCentral();

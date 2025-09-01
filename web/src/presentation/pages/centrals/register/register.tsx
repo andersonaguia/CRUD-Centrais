@@ -1,8 +1,8 @@
 "use client";
 
 import * as styles from "../styles/centrals.css";
-import { CentralForm } from "@components/core/central-form/central-form";
 import { useGetModels } from "../../../../api/models/useModels";
+import { CentralForm } from "../fragments/central-form/central-form";
 
 export const RegisterPage = () => {
   const { isLoading, error } = useGetModels();

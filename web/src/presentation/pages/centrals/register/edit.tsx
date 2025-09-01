@@ -1,5 +1,5 @@
-import { CentralForm } from "@components/core/central-form/central-form";
 import { FC } from "react";
+import { CentralForm } from "../fragments/central-form/central-form";
 
 interface EditPageProps {
   params: {

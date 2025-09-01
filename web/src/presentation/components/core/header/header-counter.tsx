@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useCentralStore } from "../../../../store/central.store";
+import { useCentralStore } from "../../../../stores/central.store";
 import { Title } from "../title";
 import { useTotalCentrals } from "../../../../api/centrals/useCentrals";
 
