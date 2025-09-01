@@ -57,7 +57,7 @@ describe('CentralService', () => {
 
   describe('create', () => {
     it('should create a new central and send notification', async () => {
-      centralRepository.countAll.mockResolvedValue(1);
+      jest.spyOn(service, 'countAll').mockResolvedValue(1);
       modelService.findOneById.mockResolvedValue(mockModel);
       centralRepository.create.mockResolvedValue(mockCentral);
 
@@ -69,15 +69,26 @@ describe('CentralService', () => {
       expect(centralRepository.create).toHaveBeenCalledWith(
         mockCreateCentralDto,
       );
+      expect(service.countAll).toHaveBeenCalled();
       expect(eventsGateway.sendCentralNotification).toHaveBeenCalledWith(
         expect.objectContaining({
           message: `${Messages.Central.events.NEW_CENTRAL_AVAILABLE} ${mockCentral.name}`,
           totalCentrals: 1,
+          centralId: mockCentral.id,
         }),
       );
-      expect(centralRepository.countAll).toHaveBeenCalledWith({});
       expect(result).toEqual(mockCentral);
-      
+    });
+
+    it('should throw NOT_FOUND error if model does not exist', async () => {
+      modelService.findOneById.mockResolvedValue(null);
+
+      await expect(service.create(mockCreateCentralDto)).rejects.toEqual({
+        code: HttpStatus.NOT_FOUND,
+        message: `${Messages.Model.http.ID_NOT_FOUND_ERROR} ${mockCreateCentralDto.modelId}.`,
+      });
+
+      expect(centralRepository.create).not.toHaveBeenCalled();
     });
   });
 
@@ -104,16 +115,17 @@ describe('CentralService', () => {
   describe('deleteById', () => {
     it('should delete a central by id and send a notification', async () => {
       centralRepository.deleteById.mockResolvedValue(mockCentral);
-      centralRepository.countAll.mockResolvedValue(1);
+      jest.spyOn(service, 'countAll').mockResolvedValue(1);
 
       await expect(service.deleteById(1)).resolves.not.toThrow();
       expect(centralRepository.deleteById).toHaveBeenCalledWith(1);
+      expect(service.countAll).toHaveBeenCalled();
       expect(eventsGateway.sendCentralNotification).toHaveBeenCalledWith(
         expect.objectContaining({
+          message: Messages.Central.events.CENTRAL_REMOVED,
           totalCentrals: 1,
         }),
       );
-      expect(centralRepository.countAll).toHaveBeenCalledWith({});
     });
   });
 
@@ -156,7 +168,8 @@ describe('CentralService', () => {
   });
 
   describe('update', () => {
-    it('should update a central successfully', async () => {
+    it('should update a central successfully and send notification', async () => {
+      jest.spyOn(service, 'countAll').mockResolvedValue(1);
       centralRepository.findOneById.mockResolvedValue(mockCentralWithModel);
       modelService.findOneById.mockResolvedValue(mockModel);
       centralRepository.update.mockResolvedValue(mockUpdatedCentralWithModel);
@@ -166,6 +179,13 @@ describe('CentralService', () => {
       expect(centralRepository.findOneById).toHaveBeenCalledWith(1);
       expect(modelService.findOneById).toHaveBeenCalledWith(2);
       expect(centralRepository.update).toHaveBeenCalledWith(1, mockUpdateDto);
+      expect(service.countAll).toHaveBeenCalled();
+      expect(eventsGateway.sendCentralNotification).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: Messages.Central.events.CENTRAL_UPDATED,
+          totalCentrals: 1,
+        }),
+      );
       expect(result.name).toEqual(mockUpdateDto.name);
     });
 

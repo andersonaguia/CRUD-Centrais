@@ -32,7 +32,7 @@ export class CentralService {
 
     const createdCentral = await this.centralRepository.create(newCentral);
 
-    const totalCentrals = await this.centralRepository.countAll({});
+    const totalCentrals = await this.countAll();
 
     const notification = new CentralActionNotificationDto();
     notification.message = `${Messages.Central.events.NEW_CENTRAL_AVAILABLE} ${createdCentral.name}`;
@@ -71,11 +71,9 @@ export class CentralService {
   async deleteById(id: number): Promise<void> {
     const deleted = await this.centralRepository.deleteById(id);
     if (deleted) {
-      const totalCentrals = await this.centralRepository.countAll({});
-
       const notification = new CentralActionNotificationDto();
       notification.message = Messages.Central.events.CENTRAL_REMOVED;
-      notification.totalCentrals = totalCentrals;
+      notification.totalCentrals = await this.countAll();
 
       this.eventsGateway.sendCentralNotification(notification);
     }
@@ -158,6 +156,14 @@ export class CentralService {
       modelData.id = updatedCentral.model.id;
       modelData.name = updatedCentral.model.name;
       centralData.model = modelData;
+    }
+
+    if(updatedCentral){
+      const notification = new CentralActionNotificationDto();
+      notification.message = Messages.Central.events.CENTRAL_UPDATED;
+      notification.totalCentrals = await this.countAll();
+
+      this.eventsGateway.sendCentralNotification(notification);
     }
 
     return centralData;
