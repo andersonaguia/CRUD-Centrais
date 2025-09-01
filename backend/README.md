@@ -8,6 +8,8 @@
 
 [NestJS](https://nestjs.com/) 11+
 
+[Banco de dados MySQL](../database/README.md) deve estar configurado e rodando conforme documentação.
+
 ## Configuração do projeto
 
 1 - Instale as dependências
@@ -16,7 +18,7 @@
 $ npm install
 ```
 
-2 - Renomeie o arquivo `.env-example` para `.env` e preencha a url para conexão com o banco de dados. Substitua os dados `USER`, `PASSWORD`, `HOST` e `DATABASE` com os dados configurados previamente. Também inclua a porta para disponibilizar a aplicação `PORT`. Caso ainda não tenha configurado o banco de dados consulte a documentação [Configurar banco de dados MySQL](../database/README.md) .
+2 - Renomeie o arquivo `.env-example` para `.env` e preencha a url para conexão com o banco de dados. Substitua os dados `USER`, `PASSWORD`, `HOST` e `DATABASE` com os dados configurados previamente. Também inclua a porta para disponibilizar a aplicação `PORT`. Caso ainda não tenha configurado o banco de dados consulte a documentação [Configurar banco de dados MySQL](../database/README.md).
 
 ```bash
 $ DATABASE_URL="mysql://USER:PASSWORD@HOST:PORT/DATABASE"
@@ -43,6 +45,10 @@ $ npx prisma db seed
 ## Compilando e rodando a aplicação
 
 ```bash
+
+# build
+$ npm run build
+
 # development
 $ npm run start
 
