@@ -1,13 +1,13 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import {
   Central,
   CreateCentralDto,
   UpdateCentralDto,
   GetCentralsParams,
 } from "./types";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+import { AxiosErrorResponse } from "../types";
+import { API_URL } from "../../common/constants";
 
 export const useGetCentrals = (params: GetCentralsParams) => {
   const urlParams = new URLSearchParams({
@@ -18,7 +18,10 @@ export const useGetCentrals = (params: GetCentralsParams) => {
     ...(params.modelId ? { modelId: params.modelId.toString() } : {}),
   });
 
-  return useQuery<{ data: Central[]; total: number }>({
+  return useQuery<
+    { data: Central[]; total: number },
+    AxiosError<AxiosErrorResponse>
+  >({
     queryKey: ["centrals", params],
     queryFn: async () => {
       const { data } = await axios.get(`${API_URL}/centrals?${urlParams}`);
@@ -29,20 +32,22 @@ export const useGetCentrals = (params: GetCentralsParams) => {
 
 export const useCreateCentral = () => {
   const queryClient = useQueryClient();
-  return useMutation<Central, Error, CreateCentralDto>({
-    mutationFn: async (newCentral) => {
-      const { data } = await axios.post(`${API_URL}/centrals`, newCentral);
-      return data;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["centrals"] });
-    },
-  });
+  return useMutation<Central, AxiosError<AxiosErrorResponse>, CreateCentralDto>(
+    {
+      mutationFn: async (newCentral) => {
+        const { data } = await axios.post(`${API_URL}/centrals`, newCentral);
+        return data;
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["centrals"] });
+      },
+    }
+  );
 };
 
 export const useDeleteCentral = () => {
   const queryClient = useQueryClient();
-  return useMutation<void, Error, string>({
+  return useMutation<void, AxiosError<AxiosErrorResponse>, string>({
     mutationFn: async (id) => {
       await axios.delete(`${API_URL}/centrals/${id}`);
     },
@@ -54,7 +59,11 @@ export const useDeleteCentral = () => {
 
 export const useUpdateCentral = () => {
   const queryClient = useQueryClient();
-  return useMutation<Central, Error, { id: string; data: UpdateCentralDto }>({
+  return useMutation<
+    Central,
+    AxiosError<AxiosErrorResponse>,
+    { id: string; data: UpdateCentralDto }
+  >({
     mutationFn: async ({ id, data }) => {
       const { data: updatedCentral } = await axios.put(
         `${API_URL}/centrals/${id}`,
@@ -70,7 +79,7 @@ export const useUpdateCentral = () => {
 };
 
 export const useGetCentral = (id: string) => {
-  return useQuery<Central>({
+  return useQuery<Central, AxiosError<AxiosErrorResponse>>({
     queryKey: ["central", id],
     queryFn: async () => {
       const { data } = await axios.get(`${API_URL}/centrals/${id}`);
@@ -81,11 +90,11 @@ export const useGetCentral = (id: string) => {
 };
 
 export const useTotalCentrals = () => {
-  return useQuery({
-    queryKey: ['totalCentrals'],
+  return useQuery<number, AxiosError<AxiosErrorResponse>>({
+    queryKey: ["totalCentrals"],
     queryFn: async () => {
       const { data } = await axios.get(`${API_URL}/centrals/count`);
       return data.total;
-    }
+    },
   });
 };

@@ -1,5 +1,8 @@
 export const Messages = {
   default: {
+    docs: {
+      HEALTH_CHECK_SUMMARY: 'Verificar o estado da API',
+    },
     logs: {
       APP_RUNNING: 'Application is running on: http://localhost:',
       SOCKET_IO_READY: 'Socket.IO Gateway is ready for connections',
