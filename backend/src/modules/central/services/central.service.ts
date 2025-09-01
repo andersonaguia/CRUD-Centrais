@@ -37,8 +37,9 @@ export class CentralService {
     const notification = new CentralActionNotificationDto();
     notification.message = `${Messages.Central.events.NEW_CENTRAL_AVAILABLE} ${createdCentral.name}`;
     notification.totalCentrals = totalCentrals;
+    notification.centralId = createdCentral.id;
 
-    this.eventsGateway.sendNewCentralNotification(notification);
+    this.eventsGateway.sendCentralNotification(notification);
 
     return createdCentral;
   }
@@ -76,7 +77,7 @@ export class CentralService {
       notification.message = Messages.Central.events.CENTRAL_REMOVED;
       notification.totalCentrals = totalCentrals;
 
-      this.eventsGateway.sendRemovedCentralNotification(notification);
+      this.eventsGateway.sendCentralNotification(notification);
     }
   }
 

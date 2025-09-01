@@ -69,7 +69,7 @@ describe('CentralService', () => {
       expect(centralRepository.create).toHaveBeenCalledWith(
         mockCreateCentralDto,
       );
-      expect(eventsGateway.sendNewCentralNotification).toHaveBeenCalledWith(
+      expect(eventsGateway.sendCentralNotification).toHaveBeenCalledWith(
         expect.objectContaining({
           message: `${Messages.Central.events.NEW_CENTRAL_AVAILABLE} ${mockCentral.name}`,
           totalCentrals: 1,
@@ -108,7 +108,7 @@ describe('CentralService', () => {
 
       await expect(service.deleteById(1)).resolves.not.toThrow();
       expect(centralRepository.deleteById).toHaveBeenCalledWith(1);
-      expect(eventsGateway.sendRemovedCentralNotification).toHaveBeenCalledWith(
+      expect(eventsGateway.sendCentralNotification).toHaveBeenCalledWith(
         expect.objectContaining({
           totalCentrals: 1,
         }),
