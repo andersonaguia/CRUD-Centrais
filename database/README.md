@@ -41,3 +41,7 @@ docker compose up -d
 ```
 
 O serviço do banco de dados será iniciado na porta padrão `3306`
+
+### Modelo relacional
+
+![alt text](image.png)
