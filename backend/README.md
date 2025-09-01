@@ -204,3 +204,28 @@ Status: 204 No Content
 ]  
 ```
 
+### A aplicação possui envio de notificações em tempo real para criação, atualização ou remoção de centrais no banco de dados via websockets.
+- Endpoint
+```
+ws://localhost:3000/notifications
+
+```
+- Namespace
+```
+/notifications
+
+```
+- Evento emitido pelo servidor
+```
+'centralNotification'
+
+```
+- Formato da mensagem
+```JSON
+{
+  "message": "Nova central disponível: Central 1",
+  "totalCentrals": 17,
+  "centralId": 10 // campo opcional
+}
+
+```
