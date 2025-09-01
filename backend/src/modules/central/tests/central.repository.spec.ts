@@ -2,7 +2,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Central, Prisma } from '@prisma/client';
 import { mockDeep, DeepMockProxy } from 'jest-mock-extended';
 import { CentralFilterDto } from '../dto/central-filter.dto';
-import { HttpStatus } from '@nestjs/common';
 import { Messages } from '../../../common/messages';
 import { CentralRepository } from '../repositories/central.repository';
 import { PrismaService } from 'src/modules/database/services/prisma.service';
@@ -16,6 +15,7 @@ import {
   mockUpdatedCentral,
   mockUpdateDto,
 } from './mocks/mockCentrals';
+import { HttpStatus } from '@nestjs/common';
 
 type PrismaServiceMock = DeepMockProxy<PrismaService>;
 
@@ -46,7 +46,11 @@ describe('CentralRepository', () => {
       const result = await repository.create(mockCreateCentralDto);
 
       expect(prismaService.central.create).toHaveBeenCalledWith({
-        data: mockCreateCentralDto,
+        data: {
+          name: mockCreateCentralDto.name,
+          mac: mockCreateCentralDto.mac,
+          modelId: mockCreateCentralDto.modelId,
+        },
       });
 
       expect(result).toEqual(mockCreatedCentral);
