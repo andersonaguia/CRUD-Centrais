@@ -2,11 +2,17 @@
   BACKEND - CRUD CENTRAIS
 </h1>
 
+## Descrição
+
+API para gerenciamento dos cadastros de centrais e modelos de centrais.
+
 ## Pré-requisitos
 
 [NodeJS](https://nodejs.org/en) 22+ 
 
 [NestJS](https://nestjs.com/) 11+
+
+[Banco de dados MySQL](../database/README.md) deve estar configurado e rodando conforme documentação.
 
 ## Configuração do projeto
 
@@ -16,7 +22,7 @@
 $ npm install
 ```
 
-2 - Renomeie o arquivo `.env-example` para `.env` e preencha a url para conexão com o banco de dados. Substitua os dados `USER`, `PASSWORD`, `HOST`, `PORT` e `DATABASE` com os dados configurados previamente. Caso ainda não tenha configurado o banco de dados consulte a documentação [Configurar banco de dados MySQL](../database/README.md).
+2 - Renomeie o arquivo `.env-example` para `.env` e preencha a url para conexão com o banco de dados. Substitua os dados `USER`, `PASSWORD`, `HOST` e `DATABASE` com os dados configurados previamente. Também inclua a porta para disponibilizar a aplicação `PORT`. Caso ainda não tenha configurado o banco de dados consulte a documentação [Configurar banco de dados MySQL](../database/README.md).
 
 ```bash
 $ DATABASE_URL="mysql://USER:PASSWORD@HOST:PORT/DATABASE"
@@ -43,6 +49,10 @@ $ npx prisma db seed
 ## Compilando e rodando a aplicação
 
 ```bash
+
+# build
+$ npm run build
+
 # development
 $ npm run start
 
@@ -64,7 +74,7 @@ $ npm run test:cov
 ```
 
 ## Rotas da aplicação
-### As rotas da aplicação estão documentadas via [Swagger](https://swagger.io/) e você pode utilizá-las acessando [localhost:3000/api](http://localhost:3000/api)
+### As rotas da aplicação estão documentadas via [Swagger](https://swagger.io/) e após rodar o projeto você pode utilizá-las acessando [localhost:3000/api](http://localhost:3000/api)
 
 - `GET /` → verificar o estado da api
 ```JSON
