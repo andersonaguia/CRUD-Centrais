@@ -2,6 +2,10 @@
   BACKEND - CRUD CENTRAIS
 </h1>
 
+## Descrição
+
+API para gerenciamento dos cadastros de centrais e modelos de centrais.
+
 ## Pré-requisitos
 
 [NodeJS](https://nodejs.org/en) 22+ 
