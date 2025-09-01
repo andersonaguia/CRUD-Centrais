@@ -40,9 +40,9 @@ export class CentralRepository {
     });
   }
 
-  async deleteById(id: number): Promise<void> {
+  async deleteById(id: number): Promise<Central> {
     try {
-      await this.prisma.central.delete({
+      return await this.prisma.central.delete({
         where: { id },
       });
     } catch (error) {

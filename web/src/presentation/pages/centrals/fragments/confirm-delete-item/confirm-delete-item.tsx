@@ -5,11 +5,11 @@ import * as s from "./styles/confirm-delete-item.css";
 import { ConfirmDeleteItemProps } from "./types";
 import { useModal } from "@components/core/modal/contexts/modal-context";
 import { Button } from "@components/core/button/button";
-import { useDeleteCentral } from "../../../../api/centrals/useCentrals";
-import { Container } from "../container";
-import { useCentralStore } from "../../../../store/central.store";
-import { getAxiosErrorMessage } from "../../../../api/utils/error-handler";
 import { toast } from "react-toastify";
+import { useDeleteCentral } from "../../../../../api/centrals/useCentrals";
+import { useCentralStore } from "../../../../../stores/central.store";
+import { getAxiosErrorMessage } from "../../../../../api/utils/error-handler";
+import { Container } from "@components/core/container";
 
 export const ConfirmDeleteItem: FC<ConfirmDeleteItemProps> = ({
   centralId,

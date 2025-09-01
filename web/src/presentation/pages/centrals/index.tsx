@@ -8,7 +8,7 @@ import { Table } from "@components/core/table";
 import { useGetCentrals } from "../../../api/centrals/useCentrals";
 import { Central } from "../../../api/centrals/types";
 import { TableActions } from "@components/core/table/table-actions";
-import { NewCentralButton } from "@components/core/new-central/new-central";
+import { NewCentralButton } from "@pages/centrals/fragments/new-central/new-central";
 import { TableFilters } from "@components/core/table/table-filters";
 
 export const CentralsPage = () => {

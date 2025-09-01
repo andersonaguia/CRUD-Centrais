@@ -1,6 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { EventsGateway } from '../events.gateway';
 import { Server } from 'socket.io';
+import { CentralActionNotificationDto } from '../dto/central-action-notification.dto';
+import { Messages } from 'src/common/messages';
 
 describe('EventsGateway', () => {
   let gateway: EventsGateway;
@@ -26,11 +28,33 @@ describe('EventsGateway', () => {
 
   describe('sendNewCentralNotification', () => {
     it('should emit a "newCentral" event with the given message', () => {
-      const message = 'Nova central disponível';
-      
-      gateway.sendNewCentralNotification(message);
+      const mockNotification: CentralActionNotificationDto = {
+        message: Messages.Central.events.NEW_CENTRAL_AVAILABLE,
+        totalCentrals: 15,
+      };
 
-      expect(gateway.server.emit).toHaveBeenCalledWith('newCentral', message);
+      gateway.sendNewCentralNotification(mockNotification);
+
+      expect(gateway.server.emit).toHaveBeenCalledWith(
+        'newCentral',
+        mockNotification,
+      );
+    });
+  });
+
+  describe('sendRemovedCentralNotification', () => {
+    it('should emit a "removedCentral" event with the given message', () => {
+      const mockNotification: CentralActionNotificationDto = {
+        message: Messages.Central.events.CENTRAL_REMOVED,
+        totalCentrals: 15,
+      };
+
+      gateway.sendRemovedCentralNotification(mockNotification);
+
+      expect(gateway.server.emit).toHaveBeenCalledWith(
+        'removedCentral',
+        mockNotification,
+      );
     });
   });
 });

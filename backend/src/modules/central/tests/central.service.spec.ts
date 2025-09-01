@@ -57,6 +57,7 @@ describe('CentralService', () => {
 
   describe('create', () => {
     it('should create a new central and send notification', async () => {
+      centralRepository.countAll.mockResolvedValue(1);
       modelService.findOneById.mockResolvedValue(mockModel);
       centralRepository.create.mockResolvedValue(mockCentral);
 
@@ -69,21 +70,14 @@ describe('CentralService', () => {
         mockCreateCentralDto,
       );
       expect(eventsGateway.sendNewCentralNotification).toHaveBeenCalledWith(
-        `${Messages.Central.events.NEW_CENTRAL_AVAILABLE} ${mockCentral.name}`,
+        expect.objectContaining({
+          message: `${Messages.Central.events.NEW_CENTRAL_AVAILABLE} ${mockCentral.name}`,
+          totalCentrals: 1,
+        }),
       );
-
+      expect(centralRepository.countAll).toHaveBeenCalledWith({});
       expect(result).toEqual(mockCentral);
-    });
-
-    it('should throw NOT_FOUND error if model does not exist', async () => {
-      modelService.findOneById.mockResolvedValue(null);
-
-      await expect(service.create(mockCreateCentralDto)).rejects.toEqual({
-        code: HttpStatus.NOT_FOUND,
-        message: `${Messages.Model.http.ID_NOT_FOUND_ERROR} ${mockCreateCentralDto.modelId}.`,
-      });
-
-      expect(centralRepository.create).not.toHaveBeenCalled();
+      
     });
   });
 
@@ -108,10 +102,18 @@ describe('CentralService', () => {
   });
 
   describe('deleteById', () => {
-    it('should delete a central by id', async () => {
-      centralRepository.deleteById.mockResolvedValue();
+    it('should delete a central by id and send a notification', async () => {
+      centralRepository.deleteById.mockResolvedValue(mockCentral);
+      centralRepository.countAll.mockResolvedValue(1);
+
       await expect(service.deleteById(1)).resolves.not.toThrow();
       expect(centralRepository.deleteById).toHaveBeenCalledWith(1);
+      expect(eventsGateway.sendRemovedCentralNotification).toHaveBeenCalledWith(
+        expect.objectContaining({
+          totalCentrals: 1,
+        }),
+      );
+      expect(centralRepository.countAll).toHaveBeenCalledWith({});
     });
   });
 

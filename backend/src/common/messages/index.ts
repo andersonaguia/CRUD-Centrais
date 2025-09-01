@@ -68,6 +68,7 @@ export const Messages = {
     },
     events: {
       NEW_CENTRAL_AVAILABLE: 'Nova central adicionada:',
+      CENTRAL_REMOVED: 'Uma central foi removida'
     },
     validators: {
       NOT_NULL: 'Obrigatório preencher o campo',
