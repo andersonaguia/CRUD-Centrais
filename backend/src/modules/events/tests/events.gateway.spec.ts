@@ -26,33 +26,18 @@ describe('EventsGateway', () => {
     expect(gateway).toBeDefined();
   });
 
-  describe('sendNewCentralNotification', () => {
-    it('should emit a "newCentral" event with the given message', () => {
+  describe('sendCentralNotification', () => {
+    it('should emit a "centralNotification" event with the given message', () => {
       const mockNotification: CentralActionNotificationDto = {
         message: Messages.Central.events.NEW_CENTRAL_AVAILABLE,
         totalCentrals: 15,
+        centralId: 1,
       };
 
-      gateway.sendNewCentralNotification(mockNotification);
+      gateway.sendCentralNotification(mockNotification);
 
       expect(gateway.server.emit).toHaveBeenCalledWith(
-        'newCentral',
-        mockNotification,
-      );
-    });
-  });
-
-  describe('sendRemovedCentralNotification', () => {
-    it('should emit a "removedCentral" event with the given message', () => {
-      const mockNotification: CentralActionNotificationDto = {
-        message: Messages.Central.events.CENTRAL_REMOVED,
-        totalCentrals: 15,
-      };
-
-      gateway.sendRemovedCentralNotification(mockNotification);
-
-      expect(gateway.server.emit).toHaveBeenCalledWith(
-        'removedCentral',
+        'centralNotification',
         mockNotification,
       );
     });

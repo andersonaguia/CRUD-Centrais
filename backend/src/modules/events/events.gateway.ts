@@ -14,11 +14,7 @@ export class EventsGateway {
 
   afterInit(server: Server) {}
 
-  sendNewCentralNotification(notification: CentralActionNotificationDto) {
-    this.server.emit('newCentral', notification);
-  }
-
-  sendRemovedCentralNotification(notification: CentralActionNotificationDto) {
-    this.server.emit('removedCentral', notification);
+  sendCentralNotification(notification: CentralActionNotificationDto) {
+    this.server.emit('centralNotification', notification);
   }
 }

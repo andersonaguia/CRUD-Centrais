@@ -16,8 +16,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="pt-br" className={fonts.nunito}>
       <body>
         <ToastProvider />
-        <Notifications />
         <ReactQueryProvider>
+          <Notifications />
           <ModalProvider>{children}</ModalProvider>
         </ReactQueryProvider>
       </body>
