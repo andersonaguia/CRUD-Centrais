@@ -10,6 +10,7 @@ import { PaginationDto } from '../dto/pagination.dto';
 import { CentralFilterDto } from '../dto/central-filter.dto';
 import { UpdateCentralDto } from '../dto/update-central.dto';
 import { EventsGateway } from 'src/modules/events/events.gateway';
+import { CentralActionNotificationDto } from 'src/modules/events/dto/central-action-notification.dto';
 
 @Injectable()
 export class CentralService {
@@ -31,9 +32,13 @@ export class CentralService {
 
     const createdCentral = await this.centralRepository.create(newCentral);
 
-    this.eventsGateway.sendNewCentralNotification(
-      `${Messages.Central.events.NEW_CENTRAL_AVAILABLE} ${createdCentral.name}`,
-    );
+    const totalCentrals = await this.centralRepository.countAll({});
+
+    const notification = new CentralActionNotificationDto();
+    notification.message = `${Messages.Central.events.NEW_CENTRAL_AVAILABLE} ${createdCentral.name}`;
+    notification.totalCentrals = totalCentrals;
+
+    this.eventsGateway.sendNewCentralNotification(notification);
 
     return createdCentral;
   }
@@ -64,6 +69,15 @@ export class CentralService {
 
   async deleteById(id: number): Promise<void> {
     const deleted = await this.centralRepository.deleteById(id);
+    if (deleted) {
+      const totalCentrals = await this.centralRepository.countAll({});
+
+      const notification = new CentralActionNotificationDto();
+      notification.message = Messages.Central.events.CENTRAL_REMOVED;
+      notification.totalCentrals = totalCentrals;
+
+      this.eventsGateway.sendRemovedCentralNotification(notification);
+    }
   }
 
   async findAll(

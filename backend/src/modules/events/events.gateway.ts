@@ -1,8 +1,6 @@
-import {
-  WebSocketGateway,
-  WebSocketServer,
-} from '@nestjs/websockets';
+import { WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Server } from 'socket.io';
+import { CentralActionNotificationDto } from './dto/central-action-notification.dto';
 
 @WebSocketGateway({
   namespace: 'notifications',
@@ -16,7 +14,11 @@ export class EventsGateway {
 
   afterInit(server: Server) {}
 
-  sendNewCentralNotification(message: string) {
-    this.server.emit('newCentral', message); 
+  sendNewCentralNotification(notification: CentralActionNotificationDto) {
+    this.server.emit('newCentral', notification);
+  }
+
+  sendRemovedCentralNotification(notification: CentralActionNotificationDto) {
+    this.server.emit('removedCentral', notification);
   }
 }
